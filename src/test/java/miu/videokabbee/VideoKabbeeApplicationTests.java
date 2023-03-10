@@ -33,6 +33,8 @@ class VideoKabbeeApplicationTests {
 	@Mock
 	PasswordEncoder passwordEncoder;
 
+
+
 	@Test
 	void getUserByID_returnsValidUser() {
 		Users users = new Users();
@@ -47,6 +49,7 @@ class VideoKabbeeApplicationTests {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(users, response.getBody());
+		System.out.println("Testing  getting a userById method");
 	}
 
 	@Test
@@ -57,6 +60,7 @@ class VideoKabbeeApplicationTests {
 
 		assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
 		assertThat(response.getBody(), is(new ExceptionHandling("not available")));
+		System.out.println("testing  a user for  not available  user ");
 	}
 
 	@Test
@@ -78,6 +82,7 @@ class VideoKabbeeApplicationTests {
 		ResponseEntity<?> response = userController.registerUser(users);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
+		System.out.println("Testing  registration  in Success");
 
 	}
 
@@ -92,10 +97,8 @@ class VideoKabbeeApplicationTests {
 
 		when(userService.register(users)).thenReturn("Username-taken");
 		assertEquals("Username-taken".length(), userService.register(users).length());
+		System.out.println("Invalid user-name taken");
 	}
-
-
-
 
 	@Test
 	void InvalidUserEmail() {
@@ -108,6 +111,7 @@ class VideoKabbeeApplicationTests {
 
 		when(userService.register(users)).thenReturn("Email-taken");
 		assertEquals("Email-taken".length(), userService.register(users).length());
+		System.out.println();
 	}
 }
 

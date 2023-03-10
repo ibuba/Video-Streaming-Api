@@ -1,4 +1,4 @@
-package miu.videokabbee.config;
+package miu.videokabbee.config.security;
 
 
 
@@ -47,12 +47,15 @@ public class JwtUtil {
     }
 
 
+
+    // Generating a token
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
 
+    // To get Refresh Token
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -64,14 +67,14 @@ public class JwtUtil {
     }
 
     // Overridden to accommodate the refresh token
-    public String doGenerateToken( String subject) {
-        return Jwts.builder()
-                .setSubject(subject)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS512, secret)
-                .compact();
-    }
+//    public String doGenerateToken( String subject) {
+//        return Jwts.builder()
+//                .setSubject(subject)
+//                .setIssuedAt(new Date())
+//                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+//                .signWith(SignatureAlgorithm.HS512, secret)
+//                .compact();
+//    }
 
     public String generateRefreshToken(String email) {
         return Jwts.builder()
