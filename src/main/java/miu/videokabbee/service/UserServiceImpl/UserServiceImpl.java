@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserInterfaceService {
     private JwtUtil jwtUtil;
 
     @Autowired
+
     UserRepository userRepository;
     @Autowired
 
