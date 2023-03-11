@@ -1,4 +1,0 @@
-this is for testing.
-another change pushed from master branch
-rules setted
-applied for branhces
