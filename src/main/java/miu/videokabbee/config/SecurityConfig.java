@@ -46,6 +46,8 @@ public class SecurityConfig {
                 //.antMatchers()
 
                 .permitAll()
+                .requestMatchers("/unAuthorized")
+                .permitAll()
                 .requestMatchers("/user/register/**")
                 .permitAll()
                         .anyRequest()
