@@ -7,10 +7,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import miu.videokabbee.service.TokenServiceInterface;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -23,10 +25,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserDetailCustom userDetailsService;
 
-    @Override
+
+    private final TokenServiceInterface tokenServiceInterface;
+
+
+
+
+
+   @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+
+
 
         final String authorizationHeader = request.getHeader("Authorization");
 
@@ -40,6 +52,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }catch (ExpiredJwtException e){ // TODO come back here!
                 String isRefreshToken = request.getHeader("isRefreshToken");
             }
+
+        }
+        if(tokenServiceInterface.isTokenBlackListed(token)){
+            System.out.println( "the token is invalid ");
+
+//            anAuthorizedRequests.unauthorized();
+//
+//            URI url = URI.create("http://localhost:8082/unAuthorized");
+//
+//            ResponseEntity<String> r = restTemplate.getForEntity(url, String.class);
+
+
+            //throw new ExceptionHandling();
+
 
         }
 

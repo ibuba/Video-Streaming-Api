@@ -32,6 +32,28 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        // ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
 
+
+        http
+                .csrf().disable()
+                        .authorizeHttpRequests()
+                .requestMatchers("/api/auth/**")
+                //.antMatchers()
+
+                .permitAll()
+                .requestMatchers("/unAuthorized")
+                .permitAll()
+                .requestMatchers("/user/register/**")
+                .permitAll()
+                        .anyRequest()
+                        .authenticated()
+                        .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider())
+                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                        ;
+
 //        http
 //                .csrf().disable()
 //                        .authorizeHttpRequests()
@@ -50,6 +72,7 @@ public class SecurityConfig {
 //                .authenticationProvider(authenticationProvider())
 //                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 //                        ;
+
         System.out.println("abule");
         return http.build();
     }
