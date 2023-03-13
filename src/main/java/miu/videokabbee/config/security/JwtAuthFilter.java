@@ -1,4 +1,4 @@
-package miu.videokabbee.config;
+package miu.videokabbee.config.security;
 
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -25,12 +25,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserDetailCustom userDetailsService;
 
+<<<<<<< HEAD:src/main/java/miu/videokabbee/config/JwtAuthFilter.java
     private final TokenServiceInterface tokenServiceInterface;
 
 
 
 
 
+=======
+>>>>>>> 44a66e39ba1904b570535eec366e34120e60a47b:src/main/java/miu/videokabbee/config/security/JwtAuthFilter.java
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -69,7 +72,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            //var userDetails = userDetailsService.loadUserByUsername(email);
             var userDetails = userDetailsService.loadUserByUsername(email);
             boolean isTokenValid = jwtUtil.validateToken(token);
             if (isTokenValid) {

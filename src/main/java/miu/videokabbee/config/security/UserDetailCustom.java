@@ -1,4 +1,4 @@
-package miu.videokabbee.config;
+package miu.videokabbee.config.security;
 
 import lombok.RequiredArgsConstructor;
 import miu.videokabbee.domain.Users;
@@ -21,23 +21,10 @@ import java.util.List;
 
 public class UserDetailCustom implements UserDetailsService {
 
-//    private final static List<UserDetails> ApplicationUsers= Arrays.asList(
-//            new User(
-//                    "abule@gmail",
-//                    "password",
-//                    Collections.singleton(new SimpleGrantedAuthority("Role_Admin"))
-//
-//            ),
-//
-//            new User(
-//                    "dane@gmail",
-//                    "passwords",
-//                    Collections.singleton(new SimpleGrantedAuthority("Role_USer"))
-//
-//            )
-//    );
 
-      public final UserRepository userRepository;
+    public final UserRepository userRepository;
+
+    // User To user Details changing  Method
 
             @Override
             public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -48,23 +35,11 @@ public class UserDetailCustom implements UserDetailsService {
 
                    Users user1=user.get();
 
-//                   UserDetails userDetails=new User(user1.getContact().getEmail(),user1.getPassword(),
-//                           Collections.singleton(new SimpleGrantedAuthority(user1.getRole())));
-
-
                    return new User(user1.getContact().getEmail(),user1.getPassword(),
                            Collections.singleton(new SimpleGrantedAuthority(user1.getRole())));
                }else{
                    return null;
                }
-
-
-//                return ApplicationUsers
-//                        .stream()
-//                        .filter(u->u.getUsername().equals(email))
-//                        .findFirst()
-//                        .orElseThrow(()->new UsernameNotFoundException("No user found"))
-//                        ;
             }
         }
 

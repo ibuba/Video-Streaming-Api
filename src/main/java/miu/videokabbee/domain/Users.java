@@ -31,4 +31,17 @@ public class Users {
    private String password;
     private Contact contact;
     private Address address;
+    private String Otp;
+
+    public Users(Long id, String firstName, String lastName, int age, String role, String userName, String password, Contact contact, Address address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.role = role;
+        this.userName = userName;
+        this.password = password;
+        this.contact = contact;
+        this.address = address;
+    }
 }

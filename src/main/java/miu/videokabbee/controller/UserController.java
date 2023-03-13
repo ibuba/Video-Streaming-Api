@@ -10,6 +10,9 @@ import miu.videokabbee.domain.Users;
 import miu.videokabbee.service.TokenServiceInterface;
 import miu.videokabbee.service.UserServiceImpl.TokenService;
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
+//import miu.videokabbee.service.tillo.TwilioOTPHandler;
+import miu.videokabbee.service.tillo.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -20,6 +23,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+//import org.springframework.web.reactive.function.server.RouterFunction;
+//import org.springframework.web.reactive.function.server.ServerResponse;
+
 
 @RestController
 @RequestMapping("/user")
@@ -27,9 +33,18 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class UserController {
 
+<<<<<<< HEAD
     private final UserServiceImpl userInterfaceService;
     private final PasswordEncoder passwordEncoder;
     private final TokenServiceInterface tokenServiceInterface;
+=======
+//    @Autowired
+//    private TwilioOTPHandler handler;
+
+
+    private final UserServiceImpl userInterfaceService;
+   private final PasswordEncoder passwordEncoder;
+>>>>>>> 44a66e39ba1904b570535eec366e34120e60a47b
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable("id") Long id) {
@@ -53,6 +68,7 @@ public class UserController {
         return new ResponseEntity<>(userRegistered, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
     @GetMapping("/logIn")
     public String login() {
         return "LoggedIn";
@@ -73,3 +89,32 @@ public class UserController {
 
 
 }
+=======
+
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/reset/{email}")
+    public ResponseEntity<?> resetPassword(@PathVariable String email) {
+        try {
+            userService.resetPassword(email);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestParam String email, @RequestParam String otp, @RequestParam String newPassword) {
+        try {
+            userService.verifyOtp(email, otp, newPassword);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+
+}
+>>>>>>> 44a66e39ba1904b570535eec366e34120e60a47b

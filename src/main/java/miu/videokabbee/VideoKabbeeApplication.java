@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@SpringBootApplication
+@SpringBootApplication()
 public class VideoKabbeeApplication implements CommandLineRunner {
 
 
@@ -31,30 +31,20 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Contact contact= new Contact("123","abule@gmail.com");
+		Contact contact= new Contact("+15205994323","abule@gmail.com");
 		Address address=new Address("s","city","ca","12334");
 		Users aa=new Users(1L,"abi","zaki",45,"user","abule","1234",contact,address);
 
 		userInterfaceService.register(aa);
 	}
 
-
-
-
-
-
-
-
-
-
-
 	@Bean
 	public ModelMapper getModelMapper(){
 		return new ModelMapper();
 	}
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }

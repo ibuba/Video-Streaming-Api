@@ -1,4 +1,4 @@
-package miu.videokabbee.config;
+package miu.videokabbee.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,17 +10,10 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -39,6 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        // ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
 
+<<<<<<< HEAD:src/main/java/miu/videokabbee/config/SecurityConfig.java
         http
                 .csrf().disable()
                         .authorizeHttpRequests()
@@ -59,6 +53,26 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                         ;
+=======
+//        http
+//                .csrf().disable()
+//                        .authorizeHttpRequests()
+//                .requestMatchers("/api/auth/**")
+//                //.antMatchers()
+//
+//                .permitAll()
+//                .requestMatchers("/user/register/**")
+//                .permitAll()
+//                        .anyRequest()
+//                        .authenticated()
+//                        .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authenticationProvider(authenticationProvider())
+//                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+//                        ;
+>>>>>>> 44a66e39ba1904b570535eec366e34120e60a47b:src/main/java/miu/videokabbee/config/security/SecurityConfig.java
         System.out.println("abule");
         return http.build();
     }
