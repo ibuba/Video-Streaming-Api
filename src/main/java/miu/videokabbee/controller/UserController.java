@@ -33,18 +33,17 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class UserController {
 
-<<<<<<< HEAD
+
     private final UserServiceImpl userInterfaceService;
     private final PasswordEncoder passwordEncoder;
     private final TokenServiceInterface tokenServiceInterface;
-=======
+
 //    @Autowired
 //    private TwilioOTPHandler handler;
 
 
-    private final UserServiceImpl userInterfaceService;
-   private final PasswordEncoder passwordEncoder;
->>>>>>> 44a66e39ba1904b570535eec366e34120e60a47b
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable("id") Long id) {
@@ -68,7 +67,7 @@ public class UserController {
         return new ResponseEntity<>(userRegistered, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
+
     @GetMapping("/logIn")
     public String login() {
         return "LoggedIn";
@@ -88,8 +87,8 @@ public class UserController {
     }
 
 
-}
-=======
+
+
 
 
     @Autowired
@@ -117,4 +116,4 @@ public class UserController {
 
 
 }
->>>>>>> 44a66e39ba1904b570535eec366e34120e60a47b
+

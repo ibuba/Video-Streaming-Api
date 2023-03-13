@@ -42,9 +42,9 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 	public ModelMapper getModelMapper(){
 		return new ModelMapper();
 	}
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 
 }

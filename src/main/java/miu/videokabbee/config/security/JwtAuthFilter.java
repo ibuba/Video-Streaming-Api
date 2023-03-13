@@ -25,16 +25,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserDetailCustom userDetailsService;
 
-<<<<<<< HEAD:src/main/java/miu/videokabbee/config/JwtAuthFilter.java
+
     private final TokenServiceInterface tokenServiceInterface;
 
 
 
 
 
-=======
->>>>>>> 44a66e39ba1904b570535eec366e34120e60a47b:src/main/java/miu/videokabbee/config/security/JwtAuthFilter.java
-    @Override
+   @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {

@@ -32,7 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        // ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
 
-<<<<<<< HEAD:src/main/java/miu/videokabbee/config/SecurityConfig.java
+
         http
                 .csrf().disable()
                         .authorizeHttpRequests()
@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                         ;
-=======
+
 //        http
 //                .csrf().disable()
 //                        .authorizeHttpRequests()
@@ -72,7 +72,7 @@ public class SecurityConfig {
 //                .authenticationProvider(authenticationProvider())
 //                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 //                        ;
->>>>>>> 44a66e39ba1904b570535eec366e34120e60a47b:src/main/java/miu/videokabbee/config/security/SecurityConfig.java
+
         System.out.println("abule");
         return http.build();
     }
