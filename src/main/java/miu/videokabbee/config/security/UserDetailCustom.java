@@ -1,8 +1,10 @@
 package miu.videokabbee.config.security;
 
 import lombok.RequiredArgsConstructor;
+import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class UserDetailCustom implements UserDetailsService {
 
-
+@Autowired
     public final UserRepository userRepository;
 
     // User To user Details changing  Method
@@ -36,7 +38,7 @@ public class UserDetailCustom implements UserDetailsService {
                    Users user1=user.get();
 
                    return new User(user1.getContact().getEmail(),user1.getPassword(),
-                           Collections.singleton(new SimpleGrantedAuthority(user1.getRole())));
+                           Collections.singleton(new SimpleGrantedAuthority(user1.getRoles().getId())));//just changed user1.getRole()
                }else{
                    return null;
                }

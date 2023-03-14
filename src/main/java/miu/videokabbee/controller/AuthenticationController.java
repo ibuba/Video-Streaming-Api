@@ -21,12 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final UserInterfaceService userDetailCustom;
+
     @PostMapping
     public ResponseEntity<?> authenticateToken(@RequestBody LogInRequest request) {
         var user = userDetailCustom.authenticate(request.getEmail(), request.getPassword());
-        return user.equals("not authenticated")?
-                new ResponseEntity<>(user, HttpStatus.NOT_FOUND):
-                new ResponseEntity<>(user,HttpStatus.OK);
+        System.out.println(request.getEmail());
+        System.out.println(request.getPassword());
+        return user.equals("not authenticated") ?
+                new ResponseEntity<>(user, HttpStatus.NOT_FOUND) :
+                new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }

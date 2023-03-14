@@ -12,6 +12,6 @@ import lombok.*;
 public class Contact {
     private String phone;
     @Email
-    @NotNull(message="email should not be empty")
+    @NotNull(message = "email should not be empty")
     private String email;
 }

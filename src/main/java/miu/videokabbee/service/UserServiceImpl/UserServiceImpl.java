@@ -2,7 +2,9 @@ package miu.videokabbee.service.UserServiceImpl;
 
 
 import miu.videokabbee.config.security.JwtUtil;
+import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
+import miu.videokabbee.repository.RoleRepository;
 import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.UserInterfaceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 
@@ -27,6 +30,8 @@ public class UserServiceImpl implements UserInterfaceService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
 
     public UserServiceImpl(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -58,6 +63,26 @@ public class UserServiceImpl implements UserInterfaceService {
         } catch (Exception e) {
             return "not authenticated";
         }
+    }
+
+//    @Override
+//    public void saveUserWithDefaultRole(Users users) {
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        String encodedPassword = encoder.encode(users.getPassword());
+//        users.setPassword(encodedPassword);
+//        Role roleUser = roleRepository.findByName(users.getUserName());
+//       users.getRoles();
+//        userRepository.save(users);
+//    }
+
+    @Override
+    public Users get(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Role save(Role role) {
+        return roleRepository.save(role);
     }
 
 }
