@@ -117,5 +117,25 @@ public class UserServiceImpl implements UserInterfaceService {
         }
         return new LoginResponse();
     }
+
+    @Override
+    public String updateUserProfile(Users users) {
+        var user1 = userRepository.findByContactEmail(users.getContact().getEmail());
+        if (user1.isPresent()) {
+            var user=user1.get();
+            user.setFirstName(users.getFirstName());
+            user.setLastName(users.getUserName());
+            user.setAge(users.getAge());
+            user.setRole(users.getRole());
+            user.setUserName(users.getUserName());
+            user.setPassword(users.getPassword());
+            user.setContact(users.getContact());
+            user.setAddress(users.getAddress());
+            user.setOtp(users.getOtp());
+            userRepository.save(user);
+       return "user Profile Updated Successfully";
+        }
+        return "user is not found";
     }
+}
 

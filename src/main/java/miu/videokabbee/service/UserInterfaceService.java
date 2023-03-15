@@ -12,4 +12,5 @@ public interface UserInterfaceService {
 
     ResponseEntity<?> authenticate(String  email, String password );
     LoginResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
+    String updateUserProfile(Users users);
 }

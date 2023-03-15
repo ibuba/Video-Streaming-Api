@@ -115,5 +115,16 @@ public class UserController {
     }
 
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUserProfile( @RequestBody Users users){
+        var user = userInterfaceService.updateUserProfile( users);
+        if(user !=null)
+        return new ResponseEntity<>(user,HttpStatus.OK);
+        else
+            return new ResponseEntity<>(new ExceptionHandling("user is not found"),HttpStatus.NOT_FOUND);
+
+    }
+
+
 }
 
