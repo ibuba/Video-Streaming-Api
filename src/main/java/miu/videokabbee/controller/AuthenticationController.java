@@ -6,8 +6,6 @@ import miu.videokabbee.dto.LogInRequest;
 import miu.videokabbee.service.UserInterfaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
+
     private final UserInterfaceService userDetailCustom;
     private int loginAttempt =0;
     private boolean restricted=false;
@@ -43,13 +43,14 @@ public class AuthenticationController {
 
 
         var user = userDetailCustom.authenticate(request.getEmail(), request.getPassword());
-        if(user.equals("not authenticated")){
+        System.out.println(user.getBody());
+        if(Objects.equals(user.getBody(), "not authenticated")){
             loginAttempt++;
         }
 
-        return user.equals("not authenticated")?
-                new ResponseEntity<>(user, HttpStatus.NOT_FOUND):
-                new ResponseEntity<>(user,HttpStatus.OK);
+        return user.getBody().equals("not authenticated")?
+                new ResponseEntity<>(user.getBody(), HttpStatus.NOT_FOUND):
+                new ResponseEntity<>(user.getBody(),HttpStatus.OK);
     }
 
 

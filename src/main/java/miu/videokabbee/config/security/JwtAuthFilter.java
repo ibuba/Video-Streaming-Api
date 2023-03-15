@@ -28,16 +28,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final TokenServiceInterface tokenServiceInterface;
 
-
-
-
-
    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
-
 
 
         final String authorizationHeader = request.getHeader("Authorization");
@@ -56,17 +50,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
         if(tokenServiceInterface.isTokenBlackListed(token)){
             System.out.println( "the token is invalid ");
-
-//            anAuthorizedRequests.unauthorized();
-//
-//            URI url = URI.create("http://localhost:8082/unAuthorized");
-//
-//            ResponseEntity<String> r = restTemplate.getForEntity(url, String.class);
-
-
-            //throw new ExceptionHandling();
-
-
+                return ;
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
