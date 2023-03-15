@@ -67,14 +67,14 @@ public class JwtUtil {
     }
 
     // Overridden to accommodate the refresh token
-//    public String doGenerateToken( String subject) {
-//        return Jwts.builder()
-//                .setSubject(subject)
-//                .setIssuedAt(new Date())
-//                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-//                .signWith(SignatureAlgorithm.HS512, secret)
-//                .compact();
-//    }
+    public String doGenerateToken( String subject) {
+        return Jwts.builder()
+                .setSubject(subject)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
 
     public String generateRefreshToken(String email) {
         return Jwts.builder()

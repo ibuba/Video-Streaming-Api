@@ -9,7 +9,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ExceptionHandling {
+public class ExceptionHandling extends RuntimeException{
     private String errorMessage;
 
     private List<String> errorMessagesFromValidity;
