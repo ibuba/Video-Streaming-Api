@@ -25,13 +25,23 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class UserController {
 
-//    @Autowired
+//   @Autowired
 //    private TwilioOTPHandler handler;
-
 
     private final UserServiceImpl userInterfaceService;
    private final PasswordEncoder passwordEncoder;
 
+   //Role assigment
+    @PostMapping("/{username}/roles/{roleName}")
+    public void assignRoleToUser(@PathVariable String roleName, @PathVariable String username) {
+        userService.assignRoleToUser(roleName, username);
+    }
+
+    //hasRole
+    @GetMapping("/{username}/hasRole/{roleName}")
+    public boolean hasRole(@PathVariable String roleName, @PathVariable String username) {
+        return userService.hasRole(roleName, username);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable("id") Long id ){
         var user=userInterfaceService.findById(id);
@@ -41,7 +51,6 @@ public class UserController {
 
         return new ResponseEntity<>( user, HttpStatus.OK);
     }
-
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody Users users){
         String encodedPassword=passwordEncoder.encode(users.getPassword());

@@ -5,6 +5,9 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document
 @Getter
 @Setter
@@ -21,7 +24,8 @@ public class Users {
     private String lastName;
     @Digits(integer = 2, fraction = 0, message = "Age must be a 1 or 2-digit number")
     private int age;
-    private String role;
+
+    private List<Role> role = new ArrayList<>();
     @NotNull(message="username should not be null")
     @Size(max=20,message = "username can not be more than 20")
     private String userName;
@@ -33,7 +37,7 @@ public class Users {
     private Address address;
     private String Otp;
 
-    public Users(Long id, String firstName, String lastName, int age, String role, String userName, String password, Contact contact, Address address) {
+    public Users(Long id, String firstName, String lastName, int age, List<Role> role, String userName, String password, Contact contact, Address address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
