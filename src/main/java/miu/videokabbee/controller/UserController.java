@@ -4,10 +4,11 @@ import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import miu.videokabbee.ExceptionHandling.ExceptionHandling;
+import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
-import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
+import miu.videokabbee.service.UserService.UserServiceImpl;
 //import miu.videokabbee.service.tillo.TwilioOTPHandler;
-import miu.videokabbee.service.tillo.UserService;
+import miu.videokabbee.service.twilio.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +32,16 @@ public class UserController {
     private final UserServiceImpl userInterfaceService;
    private final PasswordEncoder passwordEncoder;
 
-   //Role assigment
-    @PostMapping("/{username}/roles/{roleName}")
-    public void assignRoleToUser(@PathVariable String roleName, @PathVariable String username) {
-        userService.assignRoleToUser(roleName, username);
-    }
+   //Extra role assignment by admin
+//    @PostMapping("/{username}/roles/{roleName}")
+//    public void assignRoleToUser(@RequestBody Role role , @PathVariable String userName) {
+//        userService.assignRoleToUser(role , userName);
+//    }
 
     //hasRole
     @GetMapping("/{username}/hasRole/{roleName}")
-    public boolean hasRole(@PathVariable String roleName, @PathVariable String username) {
-        return userService.hasRole(roleName, username);
+    public boolean hasRole(@PathVariable String roleName, @PathVariable String userName) {
+        return userService.hasRole(roleName, userName);
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable("id") Long id ){

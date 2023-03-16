@@ -1,21 +1,17 @@
-package miu.videokabbee.service.UserServiceImpl;
+package miu.videokabbee.service.UserService;
 
 
 import miu.videokabbee.config.security.JwtUtil;
-import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.repository.RoleRepository;
 import miu.videokabbee.repository.UserRepository;
-import miu.videokabbee.service.UserInterfaceService;
+import miu.videokabbee.service.UserService.UserInterfaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 
@@ -67,9 +63,9 @@ public class UserServiceImpl implements UserInterfaceService {
         }
     }
 
-    @Override
-    public Users Creat(Users user) {
-        return null;
-    }
+//    @Override
+//    public Users create(Users user) {
+//        return null;
+//    }
 
 }

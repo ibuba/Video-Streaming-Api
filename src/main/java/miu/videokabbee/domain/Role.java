@@ -15,7 +15,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
+    @Id
     private Long id;
     private String name;
-   // private List<String> permission;
+    // private List<String> permission;
+
+
+    public Role(Role role) {
+    }
 }

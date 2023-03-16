@@ -1,12 +1,12 @@
-package miu.videokabbee.service.tillo;
+package miu.videokabbee.service.twilio;
 import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.repository.RoleRepository;
 import miu.videokabbee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -54,23 +54,23 @@ public class UserService {
         return String.format("%06d", new Random().nextInt(999999));
     }
 
-    public  void assignRoleToUser(String roleName, String username) {
-        Optional<Role> role = roleRepository.findByName(roleName);
-        Users user = userRepository.findByUsername(username);
-        if (role != null && user != null) {
-            Role Role = new Role();
-            user.getRole().add(Role);
-            userRepository.save(user);
-        }
-    }
-    public boolean hasRole(String roleName, String username) {
-        Optional<Role> role = roleRepository.findByName(roleName);
-        Users user = userRepository.findByUsername(username);
-        if (role != null && user != null) {
-            return user.getRole().contains(role);
+//    public  void assignRoleToUser(Role role, String userName) {
+//        var user  = userRepository.findByContactEmail(userName).orElseThrow(
+//                ()->new UsernameNotFoundException("not-found user")
+//        );
+//        var listOfRoles =user.getRole();
+////        if (role != null && user != null) {
+//            listOfRoles.add(role);
+//            user.setRole(listOfRoles);
+//            userRepository.save(user);
+//        }
+    public boolean hasRole(String roleName, String userName) {
+//        Optional<Role> role = roleRepository.findByC(roleName);
+        Users user = userRepository.findByUserName(userName);
+        if (roleName != null && user != null) {
+            return user.getRole().contains(roleName);
         }
         return false;
     }
-
 
 }

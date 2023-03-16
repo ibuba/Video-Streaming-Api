@@ -25,7 +25,8 @@ public class Users {
     @Digits(integer = 2, fraction = 0, message = "Age must be a 1 or 2-digit number")
     private int age;
 
-    private List<Role> role = new ArrayList<>();
+    private List<Role> role =
+            new ArrayList<>();
     @NotNull(message="username should not be null")
     @Size(max=20,message = "username can not be more than 20")
     private String userName;

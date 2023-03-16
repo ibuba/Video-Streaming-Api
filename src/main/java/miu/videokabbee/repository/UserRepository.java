@@ -1,6 +1,7 @@
 package miu.videokabbee.repository;
 
 
+import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -16,7 +17,9 @@ public interface UserRepository extends MongoRepository<Users, Long> {
 
     Optional<Users> findByContactEmail(String email);
 
-    Users findByUsername(String username);
+    Users findByUserName(String userName);
+
+
 
 
 }

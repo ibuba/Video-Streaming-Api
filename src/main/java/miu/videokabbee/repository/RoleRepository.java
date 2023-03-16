@@ -1,13 +1,20 @@
 package miu.videokabbee.repository;
 
 import miu.videokabbee.domain.Role;
+import miu.videokabbee.domain.Users;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface RoleRepository extends MongoRepository<Role,Long>{
-    Optional<Role> findByName(String name);
+@Repository
+public interface RoleRepository extends MongoRepository<Role, Long> {
 
-    @Override
     Optional<Role> findById(Long id);
+
+    Optional<Role> findByName(String userName);
+
+//    Optional<Role> findByContactEmail(String email);
+
 }
