@@ -1,9 +1,11 @@
 package miu.videokabbee;
 
 import miu.videokabbee.ExceptionHandling.ExceptionHandling;
+import miu.videokabbee.controller.AuthenticationController;
 import miu.videokabbee.controller.UserController;
 import miu.videokabbee.domain.Contact;
 import miu.videokabbee.domain.Users;
+import miu.videokabbee.dto.LogInRequest;
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -113,5 +115,34 @@ class VideoKabbeeApplicationTests {
 		assertEquals("Email-taken".length(), userService.register(users).length());
 		System.out.println();
 	}
+	@Mock
+	private UserServiceImpl UserServiceImpl;
+
+	@InjectMocks
+	private AuthenticationController authenticationcontroller;
+
+	@Test
+	public void testSuccessfulLogin() {
+		LogInRequest user = new LogInRequest();
+		user.setEmail("xaxe@gmail.com");
+		user.setPassword("password123");
+		String accessToken = "xaxe111";
+		when(UserServiceImpl.authenticate(user.getEmail(), user.getPassword())).thenReturn(accessToken);
+		assertEquals(accessToken, UserServiceImpl.authenticate(user.getEmail(), user.getPassword()));
+	}
+
+	@Test
+	public void testFailedLogin() {
+		LogInRequest user = new LogInRequest();
+		user.setEmail("xaxe");
+		user.setPassword("password456");
+		when(UserServiceImpl.authenticate(user.getEmail(), user.getPassword())).thenReturn("user not authonticate");
+
+		assertEquals("user not authonticate", UserServiceImpl.authenticate(user.getEmail(), user.getPassword()));
+	}
 }
+
+
+
+
 
