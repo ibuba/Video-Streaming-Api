@@ -13,4 +13,7 @@ public interface UserInterfaceService {
     ResponseEntity<?> authenticate(String  email, String password );
     LoginResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
     String updateUserProfile(Users users);
+    ResponseEntity<?> checkAttemptAndLock();
+    public int getLoginAttempt();
+    public void setLoginAttempt(int logInattempts);
 }

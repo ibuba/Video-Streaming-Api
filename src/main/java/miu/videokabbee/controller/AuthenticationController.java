@@ -2,6 +2,8 @@ package miu.videokabbee.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import miu.videokabbee.Integration.IntegrationInterface;
+import miu.videokabbee.Integration.Integrations;
 import miu.videokabbee.dto.LogInRequest;
 import miu.videokabbee.service.UserInterfaceService;
 import org.springframework.http.HttpStatus;
@@ -21,43 +23,25 @@ import java.util.Objects;
 public class AuthenticationController {
 
     private final UserInterfaceService userDetailCustom;
-    private int loginAttempt =0;
-    private boolean restricted=false;
-    private LocalDateTime startTime;
-
+    private final IntegrationInterface integrations;
     @PostMapping
     public ResponseEntity<?> authenticateToken(@RequestBody LogInRequest request) {
 
-        if(loginAttempt ==5){
-            System.out.println(loginAttempt);
-            if(!restricted) {
-                restricted=true;
-                startTime=LocalDateTime.now();
-            }
-            Duration duration = Duration.between(startTime, LocalDateTime.now());
-            if(duration.getSeconds()>10){
-                doTask();
-            }
-           return new ResponseEntity<>("so many attempts try again later after 12 sec currentTime= "+ duration.getSeconds(),HttpStatus.OK);
-            }
-
+        if(userDetailCustom.getLoginAttempt() ==5){
+          return  userDetailCustom.checkAttemptAndLock();
+        }
 
         var user = userDetailCustom.authenticate(request.getEmail(), request.getPassword());
-        System.out.println(user.getBody());
         if(Objects.equals(user.getBody(), "not authenticated")){
-            loginAttempt++;
+            userDetailCustom.setLoginAttempt(userDetailCustom.getLoginAttempt()+1);
+            if(userDetailCustom.getLoginAttempt()==3){
+                integrations.sendSuspiciousNotification(request.getEmail());
+            }
         }
 
         return user.getBody().equals("not authenticated")?
                 new ResponseEntity<>(user.getBody(), HttpStatus.NOT_FOUND):
                 new ResponseEntity<>(user.getBody(),HttpStatus.OK);
-    }
-
-
-
-    public void doTask() {
-        loginAttempt=0;
-        restricted=false;
     }
 }
 
