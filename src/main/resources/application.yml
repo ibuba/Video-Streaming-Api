@@ -1,0 +1,9 @@
+
+server.port=8090
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=Video-Stream
+
+twilio.account_sid=AC092c64ba3a461e22a4e2f7d1c60d215f
+twilio.auth_token=44ecd0c3602307ac1df122b8d1e5bdba
+twilio.trial_number=+18888392917

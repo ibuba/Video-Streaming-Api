@@ -10,17 +10,20 @@ import org.springframework.beans.factory.annotation.Value;
 @Service
 public class TwilioService {
 
-  //  @Value("${twilio.accountSid}")
+//   @Value("{twilio.accountSid}")
     private String accountSid= "ACc8952a46e76c33cab1269420ac726cc7";
 
-   // @Value("${twilio.authToken}")
-    private String authToken ="a6f785c98dd99d866316b01115339a3f";
+   // @Value("{twilio.authToken}")
+    private String authToken = "6e0d5fcfbf3615cc19117a816710ad95";
 
-   // @Value("${twilio.fromPhoneNumber}")
-    private String fromPhoneNumber="+18775353749";
+   //@Value("{twilio.fromPhoneNumber}")
+    private String fromPhoneNumber = "+18775353749";
 
     public void sendSms(String toPhoneNumber, String message) {
+        System.out.println("sms-method-called");
         Twilio.init(accountSid, authToken);
-        Message.creator(new PhoneNumber(toPhoneNumber), new PhoneNumber(fromPhoneNumber), message).create();
+        Message.creator(new PhoneNumber(toPhoneNumber),
+                new PhoneNumber(fromPhoneNumber), message).create();
+        System.out.println(message);
     }
 }

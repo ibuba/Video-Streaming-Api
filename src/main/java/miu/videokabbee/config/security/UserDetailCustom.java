@@ -19,6 +19,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 
+
 public class UserDetailCustom implements UserDetailsService {
 
 
@@ -38,7 +39,7 @@ public class UserDetailCustom implements UserDetailsService {
                    return new User(user1.getContact().getEmail(),user1.getPassword(),
                            Collections.singleton(new SimpleGrantedAuthority(user1.getRole())));
                }else{
-                   return null;
+                   throw  new UsernameNotFoundException("User is  not  found in database");
                }
             }
         }
