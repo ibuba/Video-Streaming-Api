@@ -5,6 +5,7 @@ package miu.videokabbee.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
 import miu.videokabbee.config.security.UserDetailCustom;
+import miu.videokabbee.controller.AuthenticationController;
 import miu.videokabbee.domain.Token;
 
 import miu.videokabbee.config.security.JwtUtil;
@@ -24,6 +25,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Service
 @NoArgsConstructor
@@ -117,6 +121,37 @@ public class UserServiceImpl implements UserInterfaceService {
         }
         return new LoginResponse();
     }
+
+/** the local date is used for calcultating the time of the user to be locked after many attempts
+ *   the log in attempts counting and the restricted also for this method*/
+    private LocalDateTime startTime;
+    private int loginAttempt=0;
+    private boolean restricted=false;
+
+    public int getLoginAttempt() {
+        return loginAttempt;
+    }
+
+    public void setLoginAttempt(int loginAttempt){
+        this.loginAttempt=loginAttempt;
+    }
+
+    @Override
+    public ResponseEntity<?> checkAttemptAndLock(){
+        System.out.println(loginAttempt);
+        if(!restricted) {
+            this.restricted=true;
+            startTime= LocalDateTime.now();
+        }
+        Duration duration = Duration.between(startTime, LocalDateTime.now());
+        if(duration.getSeconds()>10){
+            loginAttempt=0;
+            restricted=false;
+        }
+        return new ResponseEntity<>("so many attempts try again later after 12 sec currentTime= "+ duration.getSeconds(),HttpStatus.OK);
+
+    }
+
 
     @Override
     public String updateUserProfile(Users users) {
