@@ -35,7 +35,7 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 
 		Contact contact= new Contact("+15205994323","abule@gmail.com");
 		Address address=new Address("s","city","ca","12334");
-		Users aa=new Users(1L,"abi","zaki",45,"ADMIN",
+		Users aa=new Users(1L,"abi","zaki",45,"USER",
 				"abule", passwordEncoder.encode( "1234"),contact,address);
 
 		userInterfaceService.register(aa);

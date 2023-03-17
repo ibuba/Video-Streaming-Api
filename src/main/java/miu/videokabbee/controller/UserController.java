@@ -2,32 +2,23 @@ package miu.videokabbee.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
 import miu.videokabbee.ExceptionHandling.ExceptionHandling;
-import miu.videokabbee.domain.Token;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
 import miu.videokabbee.service.TokenServiceInterface;
-import miu.videokabbee.service.UserServiceImpl.TokenService;
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
-//import miu.videokabbee.service.tillo.TwilioOTPHandler;
 import miu.videokabbee.service.tillo.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.reactive.function.server.RouterFunction;
-//import org.springframework.web.reactive.function.server.ServerResponse;
+
 
 
 @RestController
@@ -42,8 +33,15 @@ public class UserController {
     private final TokenServiceInterface tokenServiceInterface;
 
 
+    // Getting All Users
+    @GetMapping
+    public ResponseEntity<?> getAllUsers(){
+        var users = userInterfaceService.findAllUsers();
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+
+  // Getting user By Id
     @GetMapping("/{id}")
-   // @Secured("ROLE_ADMIN")
     public ResponseEntity<?> getUserByID(@PathVariable("id") Long id) {
         var user = userInterfaceService.findById(id);
         if (user == null) {
@@ -52,7 +50,7 @@ public class UserController {
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
+ //Registering new Users
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody Users users) {
         String encodedPassword = passwordEncoder.encode(users.getPassword());
@@ -65,14 +63,13 @@ public class UserController {
         return new ResponseEntity<>(userRegistered, HttpStatus.OK);
     }
 
-
+    //User loggingIn
     @GetMapping("/logIn")
-   // @PreAuthorize("hasRole('ROLE_USER')")
     public String login() {
         return "LoggedIn";
     }
 
-
+// User LoggingOut
     @GetMapping("/logout")
 
     public ResponseEntity<String> logout(HttpServletRequest request) {
@@ -89,7 +86,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+ // User Password Reset
     @PostMapping("/reset/{email}")
     public ResponseEntity<?> resetPassword(@PathVariable String email) {
         try {
@@ -99,7 +96,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
+// verifying User OTP
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOtp(@RequestParam String email, @RequestParam String otp, @RequestParam String newPassword) {
         try {
@@ -109,12 +106,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    // Generating refreshToken
     @PostMapping("/refreshToken")
     public LoginResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest){
         return userInterfaceService.refreshToken(refreshTokenRequest);
     }
 
-
+// Updating Users profile
     @PutMapping("/update")
     public ResponseEntity<?> updateUserProfile( @RequestBody Users users){
         var user = userInterfaceService.updateUserProfile( users);

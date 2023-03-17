@@ -24,7 +24,10 @@ public class AuthenticationController {
 
     private final UserInterfaceService userDetailCustom;
     private final IntegrationInterface integrations;
+
+
     @PostMapping
+    // Generating Tokens for a user to login
     public ResponseEntity<?> authenticateToken(@RequestBody LogInRequest request) {
 
         if(userDetailCustom.getLoginAttempt() ==5){

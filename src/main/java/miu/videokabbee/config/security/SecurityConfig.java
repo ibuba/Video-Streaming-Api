@@ -34,8 +34,8 @@ public class SecurityConfig {
                         .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**")
                 .permitAll()
-                .requestMatchers("/unAuthorized")
-                .permitAll()
+                //.requestMatchers("/unAuthorized")
+                //.permitAll()
                 .requestMatchers("/user/register/**")
                 .permitAll()
 
