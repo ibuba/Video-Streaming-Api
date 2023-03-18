@@ -12,7 +12,7 @@ public class Integrations implements IntegrationInterface {
 
 
         private final UserRepository userRepository;
-
+// Sending messages to user
     public void sendSuspiciousNotification(String email){
         var user=userRepository.findByContactEmail(email);
 
