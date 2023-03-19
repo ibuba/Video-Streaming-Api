@@ -15,6 +15,5 @@ public interface RoleRepository extends MongoRepository<Role, Long> {
 
     Optional<Role> findByName(String userName);
 
-//    Optional<Role> findByContactEmail(String email);
 
 }

@@ -38,7 +38,11 @@ public class Users {
     private Address address;
     private String Otp;
 
-    public Users(Long id, String firstName, String lastName, int age, List<Role> role, String userName, String password, Contact contact, Address address) {
+    public Users(Long id, String firstName,
+                 String lastName, int age,
+                 List<Role> role, String userName,
+                 String password, Contact contact,
+                 Address address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

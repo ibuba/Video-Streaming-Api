@@ -33,8 +33,7 @@ public class SecurityConfig {
                         .authorizeHttpRequests()
             .requestMatchers("/admin/**").hasRole("ADMIN")
 //                .antMatchers("/api/public/**").permitAll().
-
-//                .permitAll()
+              // .permitAll()
                .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
             .requestMatchers("/**")
                 .permitAll()
@@ -58,6 +57,7 @@ public class SecurityConfig {
        authenticationProvider
                .setUserDetailsService(userDetailsService);
        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        System.out.println("in the authentication ");
        return  authenticationProvider;
     }
 @Bean
@@ -71,31 +71,6 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
 }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        return new UserDetailsService() {
-//            @Override
-//            public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//                return ApplicationUsers
-//                        .stream()
-//                        .filter(u->u.getUsername().equals(email))
-//                        .findFirst()
-//                        .orElseThrow(()->new UsernameNotFoundException("No user found"))
-//                        ;
-//            }
-//        };
     }
 
-//    @Bean
-//
-//    public SecurityFilterChain ssecurityFilterChain(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .httpBasic();
-//        //http.formLogin();
-//        //http.httpBasic();
-//        return (SecurityFilterChain)http.build();
-   // }
-//}
+

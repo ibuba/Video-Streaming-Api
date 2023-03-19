@@ -54,18 +54,7 @@ public class UserService {
         return String.format("%06d", new Random().nextInt(999999));
     }
 
-//    public  void assignRoleToUser(Role role, String userName) {
-//        var user  = userRepository.findByContactEmail(userName).orElseThrow(
-//                ()->new UsernameNotFoundException("not-found user")
-//        );
-//        var listOfRoles =user.getRole();
-////        if (role != null && user != null) {
-//            listOfRoles.add(role);
-//            user.setRole(listOfRoles);
-//            userRepository.save(user);
-//        }
     public boolean hasRole(String roleName, String userName) {
-//        Optional<Role> role = roleRepository.findByC(roleName);
         Users user = userRepository.findByUserName(userName);
         if (roleName != null && user != null) {
             return user.getRole().contains(roleName);
