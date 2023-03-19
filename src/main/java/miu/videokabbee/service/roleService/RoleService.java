@@ -10,12 +10,16 @@ public interface RoleService {
 
     Optional<Role> getRoleById(Long id);
 
-//    Optional<Role> getByRoleName(String useName);
-
     Role saveRole(Role role);
 
     Role updateRole(Role role, Long roleId);
 
-    void deleterRole(Long id);
+    void deleteRole(Long id);
+    void deleteRoleFromUser(Role role,Long id);
+
+    Role createRole(Role role);
+
+    boolean hasRole(String roleName, String userName);
+    public void assignRoleToUser(Long  roleId, String userName);
 
 }

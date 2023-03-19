@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     private RoleService roleService;
@@ -22,8 +21,8 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Role> getRoleById(@PathVariable Long id) {
         Optional<Role> role = roleService.getRoleById(id);
-        if (role == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (role.isPresent()) {
+            return new ResponseEntity<>(role.get(),HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -31,18 +30,19 @@ public class AdminController {
     @GetMapping("/roles")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Role>> getAllRoles() {
-        List<Role> roles = roleService.getAllRoles().stream()
-                .map(Role::new)
-                .collect(Collectors.toList());
+        List<Role> roles = roleService.getAllRoles();
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
 
-    @PostMapping("/role/create")
+    @PutMapping("/role/assign")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Role> createRole(@RequestBody Role role) {
-        Role createdRole = roleService.saveRole(role);
-        return new ResponseEntity<>(createdRole, HttpStatus.CREATED);
+    public ResponseEntity<?> assignRoleToUser(
+            @RequestParam Long  roleId, @RequestParam String
+            username) {
+        roleService.assignRoleToUser(roleId,username);
+         return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
 
     @PutMapping("/roles/{id}")
@@ -58,8 +58,15 @@ public class AdminController {
     @DeleteMapping("/roles/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteRole(@PathVariable Long id) {
-        roleService.deleterRole(id);
+        roleService.deleteRole(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+    @PostMapping("/role/create")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Role> createRole(@RequestBody Role role) {
+        Role createdRole = roleService.createRole(role);
+        return new ResponseEntity<>(createdRole, HttpStatus.CREATED);
+    }
+
 }

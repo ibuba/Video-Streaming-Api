@@ -54,7 +54,8 @@ public class UserServiceImpl implements UserInterfaceService {
     public String authenticate(String email, String password) {
         try {
             var user1 = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, passwordEncoder.encode(password)));
+                    new UsernamePasswordAuthenticationToken(email,
+                            password));
             var user = ((UserDetails) user1.getPrincipal());
             return jwtUtil.generateToken(user);
 
