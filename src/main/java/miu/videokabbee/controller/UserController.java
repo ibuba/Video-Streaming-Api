@@ -2,13 +2,13 @@ package miu.videokabbee.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
 import miu.videokabbee.ExceptionHandling.ExceptionHandling;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
 import miu.videokabbee.service.TokenServiceInterface;
+<<<<<<< HEAD
 import miu.videokabbee.service.UserService.UserServiceImpl;
 import miu.videokabbee.service.twilio.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+=======
+import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
+import miu.videokabbee.service.tillo.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+
+>>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
 
 @RestController
 @RequestMapping("/user")
@@ -33,6 +47,7 @@ public class UserController {
     private final TokenServiceInterface tokenServiceInterface;
 
 
+<<<<<<< HEAD
    //Extra role assignment by admin
 //    @PostMapping("/{username}/roles/{roleName}")
 //    public void assignRoleToUser(@RequestBody Role role , @PathVariable String userName) {
@@ -44,8 +59,17 @@ public class UserController {
     public boolean hasRole(@PathVariable String roleName, @PathVariable String userName) {
         return userService.hasRole(roleName, userName);
     }
+=======
+    // Getting All Users
+    @GetMapping
+    public ResponseEntity<?> getAllUsers(){
+        var users = userInterfaceService.findAllUsers();
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+
+  // Getting user By Id
+>>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
     @GetMapping("/{id}")
-   // @Secured("ROLE_ADMIN")
     public ResponseEntity<?> getUserByID(@PathVariable("id") Long id) {
         var user = userInterfaceService.findById(id);
         if (user == null) {
@@ -54,6 +78,10 @@ public class UserController {
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+<<<<<<< HEAD
+=======
+ //Registering new Users
+>>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody Users users) {
         String encodedPassword = passwordEncoder.encode(users.getPassword());
@@ -66,14 +94,13 @@ public class UserController {
         return new ResponseEntity<>(userRegistered, HttpStatus.OK);
     }
 
-
+    //User loggingIn
     @GetMapping("/logIn")
-   // @PreAuthorize("hasRole('ROLE_USER')")
     public String login() {
         return "LoggedIn";
     }
 
-
+// User LoggingOut
     @GetMapping("/logout")
 
     public ResponseEntity<String> logout(HttpServletRequest request) {
@@ -88,7 +115,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+ // User Password Reset
     @PostMapping("/reset/{email}")
     public ResponseEntity<?> resetPassword(@PathVariable String email) {
         try {
@@ -98,7 +125,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
+// verifying User OTP
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOtp(@RequestParam String email, @RequestParam String otp, @RequestParam String newPassword) {
         try {
@@ -108,12 +135,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    // Generating refreshToken
     @PostMapping("/refreshToken")
     public LoginResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest){
         return userInterfaceService.refreshToken(refreshTokenRequest);
     }
 
-
+// Updating Users profile
     @PutMapping("/update")
     public ResponseEntity<?> updateUserProfile( @RequestBody Users users){
         var user = userInterfaceService.updateUserProfile( users);

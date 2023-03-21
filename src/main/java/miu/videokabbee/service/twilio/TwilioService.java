@@ -5,6 +5,11 @@ import com.twilio.type.PhoneNumber;
 import org.springframework.stereotype.Service;
 import com.twilio.Twilio;
 
+/**
+ * Helps to send OTP through SMS
+ *
+ * */
+
 @Service
 public class TwilioService {
 

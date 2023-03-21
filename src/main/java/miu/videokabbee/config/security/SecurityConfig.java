@@ -32,8 +32,13 @@ public class SecurityConfig {
                         .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**")
                 .permitAll()
+<<<<<<< HEAD
 //                .requestMatchers("/unAuthorized")
 //                .permitAll()
+=======
+                //.requestMatchers("/unAuthorized")
+                //.permitAll()
+>>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
                 .requestMatchers("/user/register/**")
                 .permitAll()
 

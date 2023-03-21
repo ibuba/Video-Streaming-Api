@@ -52,3 +52,24 @@ import java.util.List;
 
 	}
 
+<<<<<<< HEAD
+=======
+
+	@Override
+	public void run(String... args) throws Exception {
+
+		Contact contact= new Contact("+15205994323","abule@gmail.com");
+		Address address=new Address("s","city","ca","12334");
+		Users aa=new Users(1L,"abi","zaki",45,"USER",
+				"abule", passwordEncoder.encode( "1234"),contact,address);
+
+		userInterfaceService.register(aa);
+	}
+
+	@Bean
+	public ModelMapper getModelMapper(){
+		return new ModelMapper();
+	}
+
+}
+>>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
