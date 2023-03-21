@@ -75,8 +75,22 @@ public class UserServiceImpl implements UserInterfaceService {
     }
 
     @Override
+<<<<<<< HEAD
     public List<Users> findAllUsers() {
         return userRepository.findAll();
+=======
+    public String authenticate(String email, String password) {
+        try {
+            var user1 = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email,
+                            password));
+            var user = ((UserDetails) user1.getPrincipal());
+            return jwtUtil.generateToken(user);
+
+        } catch (Exception e) {
+            return "not authenticated";
+        }
+>>>>>>> new_branch
     }
 
 

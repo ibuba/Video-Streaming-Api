@@ -33,4 +33,11 @@ public interface UserInterfaceService {
 >>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800:src/main/java/miu/videokabbee/service/UserInterfaceService.java
 }
 
+<<<<<<< HEAD
 
+=======
+    String authenticate(String email, String password);
+
+
+}
+>>>>>>> new_branch
