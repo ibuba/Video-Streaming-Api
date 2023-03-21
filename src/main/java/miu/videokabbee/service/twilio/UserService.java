@@ -1,7 +1,10 @@
-package miu.videokabbee.service.tillo;
+package miu.videokabbee.service.twilio;
+import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
+import miu.videokabbee.repository.RoleRepository;
 import miu.videokabbee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -11,7 +14,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
+ @Autowired
+ private RoleRepository roleRepository;
     @Autowired
     private TwilioService twilioService;
 
@@ -49,4 +53,13 @@ public class UserService {
         // Generate a random 6-digit OTP
         return String.format("%06d", new Random().nextInt(999999));
     }
+
+    public boolean hasRole(String roleName, String userName) {
+        Users user = userRepository.findByUserName(userName);
+        if (roleName != null && user != null) {
+            return user.getRole().contains(roleName);
+        }
+        return false;
+    }
+
 }

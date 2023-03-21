@@ -3,7 +3,7 @@ package miu.videokabbee.controller;
 
 import lombok.RequiredArgsConstructor;
 import miu.videokabbee.dto.LogInRequest;
-import miu.videokabbee.service.UserInterfaceService;
+import miu.videokabbee.service.UserService.UserInterfaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

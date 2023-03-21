@@ -1,29 +1,25 @@
-package miu.videokabbee.service.UserServiceImpl;
-
-
-
+package miu.videokabbee.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
-import miu.videokabbee.config.security.UserDetailCustom;
 import miu.videokabbee.domain.Token;
-
 import miu.videokabbee.config.security.JwtUtil;
-
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
 import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.TokenServiceInterface;
-import miu.videokabbee.service.UserInterfaceService;
+import miu.videokabbee.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @NoArgsConstructor
@@ -35,13 +31,16 @@ public class UserServiceImpl implements UserInterfaceService {
     @Autowired
     UserRepository userRepository;
     @Autowired
+
    TokenServiceInterface tokenServiceInterface;
-
-
 
     @Autowired
 
     AuthenticationManager authenticationManager;
+
+
+    @Autowired
+    RoleRepository roleRepository;
 
 
     public UserServiceImpl(AuthenticationManager authenticationManager) {
@@ -64,6 +63,10 @@ public class UserServiceImpl implements UserInterfaceService {
         return userRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public List<Users> findAllUsers() {
+        return userRepository.findAll();
+    }
 
     public void logOut(HttpServletRequest request){
         String tokenName="";
@@ -76,7 +79,9 @@ public class UserServiceImpl implements UserInterfaceService {
         tokenServiceInterface.create(token);
     }
 
+
     @Override
+    // Generating access Token for User
     public ResponseEntity<?> authenticate(String email, String password) {
 
         try {
@@ -93,8 +98,6 @@ public class UserServiceImpl implements UserInterfaceService {
 
             return new ResponseEntity<>("not authenticated", HttpStatus.OK);
         }
-
-
 
 
     }
@@ -137,5 +140,41 @@ public class UserServiceImpl implements UserInterfaceService {
         }
         return "user is not found";
     }
-}
+    /**
+     * the local date is used for calcultating the time of the user to be locked after many attempts
+     * the log in attempts counting and the restricted also for this method
+     */
+    private LocalDateTime startTime;
+    private int loginAttempt = 0;
+    private boolean restricted = false;
+
+
+    @Override
+        public int getLoginAttempt() {
+            return loginAttempt;
+        }
+
+
+    @Override
+        public void setLoginAttempt(int loginAttempt) {
+            this.loginAttempt = loginAttempt;
+        }
+
+    @Override
+    public ResponseEntity<?> checkAttemptAndLock() {
+        System.out.println(loginAttempt);
+        if (!restricted) {
+            this.restricted = true;
+            startTime = LocalDateTime.now();
+        }
+        Duration duration = Duration.between(startTime, LocalDateTime.now());
+        if (duration.getSeconds() > 10) {
+            loginAttempt = 0;
+            restricted = false;
+        }
+        return new ResponseEntity<>("so many attempts try again later after 12 sec currentTime= " + duration.getSeconds(), HttpStatus.OK);
+
+    }
+
+    }
 

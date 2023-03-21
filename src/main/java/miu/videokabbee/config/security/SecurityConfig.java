@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -26,16 +24,16 @@ public class SecurityConfig {
     private final UserDetailCustom userDetailsService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       // ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
 
         http
                 .csrf().disable()
                         .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**")
                 .permitAll()
-                .requestMatchers("/unAuthorized")
-                .permitAll()
+//                .requestMatchers("/unAuthorized")
+//                .permitAll()
                 .requestMatchers("/user/register/**")
                 .permitAll()
 
@@ -43,36 +41,56 @@ public class SecurityConfig {
 
                         .anyRequest()
                         .authenticated()
+;
+    http
+                .csrf().disable()
+                        .authorizeHttpRequests()
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/api/public/**").permitAll().
+              // .permitAll()
+               .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
+            .requestMatchers("/**")
+                .permitAll()
+                        .anyRequest()
+                       .authenticated()
+
                         .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider())
                         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+
                         ;
+                       ;
+
         System.out.println("abule");
         return http.build();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider() throws Exception {
        final DaoAuthenticationProvider authenticationProvider=
                new DaoAuthenticationProvider();
        authenticationProvider
                .setUserDetailsService(userDetailsService);
        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        System.out.println("in the authentication ");
        return  authenticationProvider;
     }
 @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+
+    public BCryptPasswordEncoder passwordEncoder() throws Exception {
        return new BCryptPasswordEncoder();
 
     }
 
-@Bean
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-}
+    }
+
+
     }
 
 

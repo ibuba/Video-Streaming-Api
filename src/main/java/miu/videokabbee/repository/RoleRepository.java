@@ -1,6 +1,5 @@
 package miu.videokabbee.repository;
 
-
 import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -10,17 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends MongoRepository<Users, Long> {
-    Boolean existsByUserName(String userName);
+public interface RoleRepository extends MongoRepository<Role, Long> {
 
-    Boolean existsByContact_Email(String email);
+    Optional<Role> findById(Long id);
 
-    Optional<Users> findByContactEmail(String email);
-
-    Users findByUserName(String userName);
-
-
-
+    Optional<Role> findByName(String userName);
 
 
 }
