@@ -4,6 +4,7 @@ package miu.videokabbee.service.UserServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import miu.videokabbee.config.security.UserDetailCustom;
 import miu.videokabbee.domain.Token;
 
@@ -15,6 +16,7 @@ import miu.videokabbee.dto.RefreshTokenRequest;
 import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.TokenServiceInterface;
 import miu.videokabbee.service.UserInterfaceService;
+import miu.videokabbee.service.emailSender.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,10 +39,12 @@ public class UserServiceImpl implements UserInterfaceService {
     UserRepository userRepository;
     @Autowired
    TokenServiceInterface tokenServiceInterface;
+   @Autowired
+   PasswordEncoder passwordEncoder;
 
-
-
-    @Autowired
+   @Autowired
+    EmailService emailService;
+   @Autowired
 
     AuthenticationManager authenticationManager;
 
@@ -50,19 +55,19 @@ public class UserServiceImpl implements UserInterfaceService {
 
 
     public String register(Users users) {
-        if (userRepository.existsByContact_Email(users.getContact().getEmail())) {
-            return "Email-taken";
-        } else if (userRepository.existsByUserName(users.getUserName())) {
-            return "Username-taken";
-
-        }
+        if(userRepository.existsByContact_Email(users.getContact().getEmail())){
+           return "Email-taken";
+        }else
         userRepository.save(users);
-        return "Success";
+        return users.getUserName()+"Successfully registered ";
     }
 
-    public Users findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public Users getUserById(Long id) {
+        var user =  userRepository.findById(id);
+         return (user.isPresent())?
+                 user.get(): null;
     }
+
 
 
     public void logOut(HttpServletRequest request){
@@ -88,14 +93,10 @@ public class UserServiceImpl implements UserInterfaceService {
             LoginResponse l=new LoginResponse(accessToken,refreshToken);
             return new ResponseEntity<>(l, HttpStatus.OK);
 
-
         } catch (Exception e) {
 
             return new ResponseEntity<>("not authenticated", HttpStatus.OK);
         }
-
-
-
 
     }
 
@@ -118,9 +119,25 @@ public class UserServiceImpl implements UserInterfaceService {
         return new LoginResponse();
     }
 
+
+
+    // resting  password
+    @Override
+    public void resetPassword(String email,String password ) {
+        var user=   userRepository.findByContactEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException(
+                        "user-notFound to be  Rest password"));
+                user.setPassword(passwordEncoder.encode(password));
+                userRepository.save(user);
+    }
+
+
+
+
     @Override
     public String updateUserProfile(Users users) {
-        var user1 = userRepository.findByContactEmail(users.getContact().getEmail());
+        var user1 = userRepository.
+                findByContactEmail(users.getContact().getEmail());
         if (user1.isPresent()) {
             var user=user1.get();
             user.setFirstName(users.getFirstName());

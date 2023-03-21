@@ -51,9 +51,8 @@ public class UserService {
     }
     public void verifyOtp(
             String email,
-            String otp,
-            String newPassword) throws Exception {
-        System.out.println(email);
+            String otp
+            ) throws Exception {
         System.out.println("verify called");
         var user = userRepository.findByContactEmail(email).orElseThrow(
                 ()-> new UsernameNotFoundException("user-not found")
@@ -62,11 +61,9 @@ public class UserService {
         if (!otp.equals(user.getOtp())) {
             throw new Exception("Invalid OTP");
         }
-        System.out.println("previous password was"+ user.getPassword());
+        System.out.println("previous password was"
+                + user.getPassword());
 
-        user.setPassword(newPassword);
-        System.out.println("user password for "
-                + user.getFirstName()+ "changed to " + newPassword);
         user.setOtp(null);
         userRepository.save(user);
     }

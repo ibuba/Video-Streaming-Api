@@ -1,16 +1,19 @@
 package miu.videokabbee.service.emailSender;
 
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.Properties;
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+//import javax.mail.Authenticator;
+//import javax.mail.Message;
+//import javax.mail.MessagingException;
+//import javax.mail.PasswordAuthentication;
+//import javax.mail.Session;
+//import javax.mail.Transport;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.internet.MimeMessage;
 @Service
 public class EmailService {
 
@@ -19,7 +22,9 @@ public class EmailService {
     private final String emailHost = "smtp.gmail.com";
     private final int emailPort = 587;
 
-    public void sendVerificationEmail(String recipientEmail, String verificationLink) throws MessagingException {
+    public void sendVerificationEmail(String recipientEmail,
+                                      String verificationLink)
+            throws MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");

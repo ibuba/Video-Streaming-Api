@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -31,30 +29,25 @@ public class SecurityConfig {
 
         http
                 .csrf().disable()
-                        .authorizeHttpRequests()
+                .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**")
                 .permitAll()
-                .requestMatchers("/unAuthorized")
-                .permitAll()
-                .requestMatchers("/user/register/**")
-                .permitAll()
-
-                .requestMatchers("/user/{id}").hasAuthority("ADMIN")
-
-                        .anyRequest()
-                        .authenticated()
-                        .and()
+                .requestMatchers("/user/register/**").hasAnyRole("ADMIN","GUEST","USER")
+                .requestMatchers("/user/{id}")
+                .hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+//                        .and()
+//                .oauth2Login()
+            .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider())
                         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                         ;
-        System.out.println("abule");
         return http.build();
-    }
-
-    @Bean
+    }@Bean
     public AuthenticationProvider authenticationProvider() {
        final DaoAuthenticationProvider authenticationProvider=
                new DaoAuthenticationProvider();
