@@ -3,9 +3,7 @@ package miu.videokabbee.controller;
 
 import lombok.RequiredArgsConstructor;
 import miu.videokabbee.Integration.IntegrationInterface;
-import miu.videokabbee.Integration.Integrations;
 import miu.videokabbee.dto.LogInRequest;
-import miu.videokabbee.service.UserService.UserInterfaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @RestController
