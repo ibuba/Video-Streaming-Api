@@ -6,6 +6,7 @@ import miu.videokabbee.Integration.IntegrationInterface;
 import miu.videokabbee.dto.LogInRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class AuthenticationController {
 
     @PostMapping
     // Generating Tokens for a user to login
-    public ResponseEntity<?> authenticateToken(@RequestBody LogInRequest request) {
+    public ResponseEntity<?> authenticateToken(@RequestBody @Validated LogInRequest request) {
 
         if(userDetailCustom.getLoginAttempt() ==5){
           return  userDetailCustom.checkAttemptAndLock();

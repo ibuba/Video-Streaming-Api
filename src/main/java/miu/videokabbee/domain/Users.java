@@ -5,9 +5,6 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Document
 @Getter
 @Setter
@@ -32,7 +29,9 @@ public class Users {
     private String userName;
    @Size( min=8 ,max=10 ,message = "password should be between 8 and 10")
    @NotBlank(message="password should not be blank")
-   @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).*$", message = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character")
+   @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).*$",
+           message = "Password must contain at least one uppercase letter, " +
+                   "one lowercase letter, one number, and one special character")
    private String password;
     private Contact contact;
     private Address address;
@@ -48,7 +47,6 @@ public class Users {
         this.lastName = lastName;
         this.age = age;
         this.role = role;
-        this.userName = userName;
         this.password = password;
         this.contact = contact;
         this.address = address;

@@ -3,6 +3,8 @@ package miu.videokabbee.config.security;
 
 
 import io.jsonwebtoken.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
+
 public class JwtUtil {
     private final String secret = "secret";
     private final long expiration = 5 * 60 * 60 * 60;
