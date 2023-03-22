@@ -76,12 +76,6 @@ public class UserService {
         return String.format("%06d", new Random().nextInt(999999));
     }
 
-    public boolean hasRole(String roleName, String userName) {
-        Users user = userRepository.findByUserName(userName);
-        if (roleName != null && user != null) {
-            return user.getRole().contains(roleName);
-        }
-        return false;
-    }
+
 
 }

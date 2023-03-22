@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -33,7 +33,10 @@ public class UserDetailCustom implements UserDetailsService {
                if(user.isPresent()){
                    Users user1 = user.get();
                    return new User(user1.getContact().getEmail(),user1.getPassword(),
-                           Collections.singleton(new SimpleGrantedAuthority(user1.getRole())));
+
+                           user1.getRole().stream().map(role ->
+                               new SimpleGrantedAuthority(role.getName())
+                           ).collect(Collectors.toList()));
                }else{
                    throw  new UsernameNotFoundException("User is  not  found in database");
                }

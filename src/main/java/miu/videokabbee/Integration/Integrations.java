@@ -4,9 +4,8 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.emailSender.EmailService;
-import miu.videokabbee.service.tillo.UserService;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 
 @Component
 @RequiredArgsConstructor

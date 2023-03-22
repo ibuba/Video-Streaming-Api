@@ -5,13 +5,16 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
+@Builder
 public class Users {
     @Id
     private Long id;
@@ -39,7 +42,7 @@ public class Users {
 
     public Users(Long id, String firstName,
                  String lastName, int age,
-                 List<Role> role, String userName,
+                 List<Role> role,
                  String password, Contact contact,
                  Address address) {
         this.id = id;
