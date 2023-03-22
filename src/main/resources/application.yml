@@ -1,0 +1,29 @@
+spring:
+  data:
+    mongodb:
+      database: video-stream
+      host: localhost
+      port: 27017
+      uuid-representation: standard
+      uri: mongodb://localhost:27017
+
+  twilio:
+    trial-number: ""
+    auth-token: "6e0d5fcfbf3615cc19117a816710ad95"
+    account-sid: "ACc8952a46e76c33cab1269420ac726cc7"
+  security:
+    oauth2:
+      client:
+            registration:
+              google:
+                client-id: 618100775828-hvhdmcp7ovna5b7noeb4p41cd6lnvs1r.apps.googleusercontent.com
+                client-secret: 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
+                scope:
+                  - email
+                  - profile
+server:
+  port: 8090
+
+
+
+

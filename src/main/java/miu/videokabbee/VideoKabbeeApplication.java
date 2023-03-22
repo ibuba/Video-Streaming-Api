@@ -32,6 +32,7 @@ import java.util.List;
 @SpringBootApplication
 @RequiredArgsConstructor
 public class VideoKabbeeApplication implements CommandLineRunner {
+<<<<<<< HEAD
 
 
 	private  final UserInterfaceService userInterfaceService;
@@ -77,10 +78,20 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 =======
 
 	@Override
+=======
+	@Autowired
+	UserInterfaceService userInterfaceService;
+	@Autowired
+	private  PasswordEncoder passwordEncoder;
+	public static void main(String[] args) {
+		SpringApplication.run(VideoKabbeeApplication.class, args);
+	}@Override
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
 	public void run(String... args) throws Exception {
-
-		Contact contact= new Contact("+15205994323","abule@gmail.com");
+		Contact contact= new Contact("+15205994323","ibrahim.imam642@gmail.com");
+		Contact contact1= new Contact("+15205778890","imam642@gmail.com");
 		Address address=new Address("s","city","ca","12334");
+<<<<<<< HEAD
 <<<<<<< HEAD
 		Users aa=new Users(1L,"abi","zaki",45,"USER",
 				"abule", passwordEncoder.encode( "1234"),contact,address);
@@ -96,6 +107,16 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 	@Bean
 	public ModelMapper getModelMapper(){
 		return new ModelMapper();
+=======
+		Address address1=new Address("400w Washington ","Fairfield",
+				                      "IA","52556");
+		Users user1=new Users(1L,"Ibrahim","Imam",31,"ADMIN",
+				 passwordEncoder.encode( "I@ibrahim1"),contact,address);
+		Users user2=new Users(2L,"abi","zaki",45,"ADMIN"
+				, passwordEncoder.encode( "A@bule23"),contact1,address1);
+		userInterfaceService.register(user1);
+		userInterfaceService.register(user2);
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
 	}
 
 }

@@ -1,5 +1,4 @@
 package miu.videokabbee.controller;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +19,8 @@ import org.springframework.web.bind.annotation.*;
 =======
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
 import miu.videokabbee.service.tillo.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,14 +33,19 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Validated
 public class UserController {
+<<<<<<< HEAD
 
 
 //   @Autowired
 //    private TwilioOTPHandler handler;
 
+=======
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
     private final UserServiceImpl userInterfaceService;
     private final PasswordEncoder passwordEncoder;
+
     private final TokenServiceInterface tokenServiceInterface;
+    private  final UserService userService;
 
 
 <<<<<<< HEAD
@@ -64,19 +65,30 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> getAllUsers(){
         var users = userInterfaceService.findAllUsers();
-        return new ResponseEntity<>(users,HttpStatus.OK);
+        return (users.size()>1)?
+         new ResponseEntity<>(users,HttpStatus.OK):new ResponseEntity<>(
+                new ExceptionHandling(
+                        "Users are  not available"),
+        HttpStatus.NOT_FOUND);
     }
 
   // Getting user By Id
+<<<<<<< HEAD
 >>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
+=======
+    // done well
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserByID(@PathVariable("id") Long id) {
-        var user = userInterfaceService.findById(id);
+    public ResponseEntity<?> getUserByID(@PathVariable  Long id) {
+        var user = userInterfaceService.getUserById(id);
         if (user == null) {
-            return new ResponseEntity<>(new ExceptionHandling("not available"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(
+                    new ExceptionHandling(
+                            "User is not available with this = "+ id),
+                    HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 <<<<<<< HEAD
 =======
@@ -87,22 +99,12 @@ public class UserController {
         String encodedPassword = passwordEncoder.encode(users.getPassword());
         users.setPassword(encodedPassword);
         var userRegistered = userInterfaceService.register(users);
-
-        if (userRegistered.equals("Username-taken") || userRegistered.equals("Email-taken")) {
+        if (userRegistered.equals("Email-taken")) {
             return new ResponseEntity<>(new ExceptionHandling(userRegistered), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userRegistered, HttpStatus.OK);
     }
-
-    //User loggingIn
-    @GetMapping("/logIn")
-    public String login() {
-        return "LoggedIn";
-    }
-
-// User LoggingOut
     @GetMapping("/logout")
-
     public ResponseEntity<String> logout(HttpServletRequest request) {
         try {
             userInterfaceService.logOut(request);
@@ -113,26 +115,58 @@ public class UserController {
 
     }
 
+<<<<<<< HEAD
     @Autowired
     private UserService userService;
  // User Password Reset
     @PostMapping("/reset/{email}")
     public ResponseEntity<?> resetPassword(@PathVariable String email) {
+=======
+// Resting By Email
+    @PostMapping("/resetEmail")
+    public ResponseEntity<?> resetPasswordByEmail(@RequestParam String email) {
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
         try {
-            userService.resetPassword(email);
+            userService.resetPasswordByEmail(email);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-// verifying User OTP
-    @PostMapping("/verify-otp")
-    public ResponseEntity<?> verifyOtp(@RequestParam String email, @RequestParam String otp, @RequestParam String newPassword) {
+        @PostMapping("/resetBySms")
+        public ResponseEntity<?> resetPasswordBySms(@RequestParam String email) {
+            try {
+                userService.resetPasswordBySms(email);
+                return ResponseEntity.ok("otp- sent");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            }
+    }
+    @PostMapping("/resPassword")
+    public  ResponseEntity<?>resetPassword(
+            @RequestParam String email,
+            @RequestParam String newPassword ){
+
         try {
-            userService.verifyOtp(email, otp, newPassword);
+            userInterfaceService.resetPassword(email, newPassword);
+            return ResponseEntity.ok().build();
+
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    }
+
+    // verification of OTP
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(
+            @RequestParam String email,
+            @RequestParam String otp){
+        try {
+            userService.verifyOtp(email, otp);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(
+                    HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
     // Generating refreshToken

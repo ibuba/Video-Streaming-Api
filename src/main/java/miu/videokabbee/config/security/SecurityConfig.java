@@ -29,9 +29,10 @@ public class SecurityConfig {
 
         http
                 .csrf().disable()
-                        .authorizeHttpRequests()
+                .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**")
                 .permitAll()
+<<<<<<< HEAD
 <<<<<<< HEAD
 //                .requestMatchers("/unAuthorized")
 //                .permitAll()
@@ -60,6 +61,16 @@ public class SecurityConfig {
                        .authenticated()
 
                         .and()
+=======
+                .requestMatchers("/user/register/**").hasAnyRole("ADMIN","GUEST","USER")
+                .requestMatchers("/user/{id}")
+                .hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .oauth2Login()
+                .and()
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -67,6 +78,7 @@ public class SecurityConfig {
                         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
                         ;
+<<<<<<< HEAD
                        ;
 
         System.out.println("abule");
@@ -75,6 +87,11 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() throws Exception {
+=======
+        return http.build();
+    }@Bean
+    public AuthenticationProvider authenticationProvider() {
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
        final DaoAuthenticationProvider authenticationProvider=
                new DaoAuthenticationProvider();
        authenticationProvider
@@ -89,9 +106,15 @@ public class SecurityConfig {
        return new BCryptPasswordEncoder();
 
     }
+<<<<<<< HEAD
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+=======
+@Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
         return config.getAuthenticationManager();
 <<<<<<< HEAD
     }

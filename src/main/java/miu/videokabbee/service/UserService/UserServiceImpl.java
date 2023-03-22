@@ -12,15 +12,24 @@ import miu.videokabbee.config.security.JwtUtil;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
+import miu.videokabbee.dto.UserDTO;
 import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.TokenServiceInterface;
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 import miu.videokabbee.repository.RoleRepository;
+=======
+import miu.videokabbee.service.UserInterfaceService;
+import miu.videokabbee.service.emailSender.EmailService;
+import org.modelmapper.ModelMapper;
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -38,6 +47,7 @@ public class UserServiceImpl implements UserInterfaceService {
     UserRepository userRepository;
     @Autowired
 <<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 
    TokenServiceInterface tokenServiceInterface;
 =======
@@ -46,8 +56,19 @@ public class UserServiceImpl implements UserInterfaceService {
 >>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
 
     @Autowired
+=======
+   TokenServiceInterface tokenServiceInterface;
+   @Autowired
+   PasswordEncoder passwordEncoder;
+
+   @Autowired
+    EmailService emailService;
+   @Autowired
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
 
     AuthenticationManager authenticationManager;
+   @Autowired
+    private ModelMapper modelMapper;
 
 
     @Autowired
@@ -57,26 +78,22 @@ public class UserServiceImpl implements UserInterfaceService {
     public UserServiceImpl(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
-
-
     public String register(Users users) {
-        if (userRepository.existsByContact_Email(users.getContact().getEmail())) {
-            return "Email-taken";
-        } else if (userRepository.existsByUserName(users.getUserName())) {
-            return "Username-taken";
-
-        }
+        if(userRepository.existsByContact_Email(users.getContact().getEmail())){
+           return "Email-taken";
+        }else
         userRepository.save(users);
-        return "Success";
+        return users.getFirstName()+"Successfully registered ";
     }
-
-    public Users findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserDTO getUserById(Long id) {
+        var user =  userRepository.findById(id);
+         return (user.isPresent())?
+                modelMapper.map( user.get(),UserDTO.class): null;
     }
-
     @Override
 <<<<<<< HEAD
     public List<Users> findAllUsers() {
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
         return userRepository.findAll();
 =======
     public String authenticate(String email, String password) {
@@ -91,6 +108,9 @@ public class UserServiceImpl implements UserInterfaceService {
             return "not authenticated";
         }
 >>>>>>> new_branch
+=======
+       return userRepository.findAll();
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
     }
 
 
@@ -104,12 +124,14 @@ public class UserServiceImpl implements UserInterfaceService {
         token.setTokenName(tokenName);
         tokenServiceInterface.create(token);
     }
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 
 
+=======
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
     @Override
     // Generating access Token for User
     public ResponseEntity<?> authenticate(String email, String password) {
-
         try {
             var user1 = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, password));
@@ -118,10 +140,7 @@ public class UserServiceImpl implements UserInterfaceService {
             String accessToken = jwtUtil.generateToken(user);
             LoginResponse l = new LoginResponse(accessToken, refreshToken);
             return new ResponseEntity<>(l, HttpStatus.OK);
-
-
         } catch (Exception e) {
-
             return new ResponseEntity<>("not authenticated", HttpStatus.OK);
         }
 
@@ -182,20 +201,33 @@ public class UserServiceImpl implements UserInterfaceService {
     }
 
 
+
+
+    // resting  password
+    @Override
+    public void resetPassword(String email,String password ) {
+        var user=   userRepository.findByContactEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException(
+                        "user-notFound to be  Rest password"));
+                user.setPassword(passwordEncoder.encode(password));
+                userRepository.save(user);
+    }
+
+
+
+
     @Override
     public String updateUserProfile(Users users) {
-        var user1 = userRepository.findByContactEmail(users.getContact().getEmail());
+        var user1 = userRepository.
+                findByContactEmail(users.getContact().getEmail());
         if (user1.isPresent()) {
             var user = user1.get();
             user.setFirstName(users.getFirstName());
-            user.setLastName(users.getUserName());
+            user.setLastName(users.getLastName());
             user.setAge(users.getAge());
-            user.setRole(users.getRole());
-            user.setUserName(users.getUserName());
             user.setPassword(users.getPassword());
-            user.setContact(users.getContact());
+            user.getContact().setPhone(users.getContact().getPhone());
             user.setAddress(users.getAddress());
-            user.setOtp(users.getOtp());
             userRepository.save(user);
             return "user Profile Updated Successfully";
         }

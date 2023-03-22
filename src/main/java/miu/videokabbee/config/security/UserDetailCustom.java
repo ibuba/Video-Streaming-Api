@@ -19,21 +19,19 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 
+
 public class UserDetailCustom implements UserDetailsService {
-
-
     public final UserRepository userRepository;
 
     // User To user Details changing  Method
-
-            @Override
+    @Override
             public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
                var user = userRepository.findByContactEmail(email);
 
                if(user.isPresent()){
-
                    Users user1 = user.get();
+<<<<<<< HEAD
                    List<GrantedAuthority> authorities =
                            user1
                                    .getRole().stream().map(x->new SimpleGrantedAuthority
@@ -42,8 +40,12 @@ public class UserDetailCustom implements UserDetailsService {
                    return new User(user1.getContact().getEmail(),user1.getPassword(),
                            authorities);
 
+=======
+                   return new User(user1.getContact().getEmail(),user1.getPassword(),
+                           Collections.singleton(new SimpleGrantedAuthority(user1.getRole())));
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
                }else{
-                   return null;
+                   throw  new UsernameNotFoundException("User is  not  found in database");
                }
             }
         }
