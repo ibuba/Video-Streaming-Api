@@ -6,13 +6,11 @@ import miu.videokabbee.ExceptionHandling.ExceptionHandling;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
-import miu.videokabbee.dto.UserDTO;
 import miu.videokabbee.service.TokenServiceInterface;
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
 import miu.videokabbee.service.tillo.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,28 +18,43 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 @Validated
 public class UserController {
     private final UserServiceImpl userInterfaceService;
     private final PasswordEncoder passwordEncoder;
+
     private final TokenServiceInterface tokenServiceInterface;
     private  final UserService userService;
 
 
+    // Getting All Users
+    @GetMapping
+    public ResponseEntity<?> getAllUsers(){
+        var users = userInterfaceService.findAllUsers();
+        return (users.size()>1)?
+         new ResponseEntity<>(users,HttpStatus.OK):new ResponseEntity<>(
+                new ExceptionHandling(
+                        "Users are  not available"),
+        HttpStatus.NOT_FOUND);
+    }
+
+  // Getting user By Id
     // done well
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable  Long id) {
         var user = userInterfaceService.getUserById(id);
-        System.out.println(user.getFirstName());
         if (user == null) {
             return new ResponseEntity<>(
-                    new ExceptionHandling("User is available with this = "+ id), HttpStatus.NOT_FOUND);
+                    new ExceptionHandling(
+                            "User is not available with this = "+ id),
+                    HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
     }
+ //Registering new Users
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody Users users) {
         String encodedPassword = passwordEncoder.encode(users.getPassword());
@@ -109,12 +122,13 @@ public class UserController {
                     HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    // Generating refreshToken
     @PostMapping("/refreshToken")
-    public LoginResponse refreshToken(@RequestBody
-                                          RefreshTokenRequest
-                                                  refreshTokenRequest){
+    public LoginResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest){
         return userInterfaceService.refreshToken(refreshTokenRequest);
     }
+
+// Updating Users profile
     @PutMapping("/update")
     public ResponseEntity<?> updateUserProfile( @RequestBody Users users){
         var user = userInterfaceService.updateUserProfile( users);

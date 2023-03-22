@@ -37,9 +37,9 @@ public class SecurityConfig {
                 .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
-//                        .and()
-//                .oauth2Login()
-            .and()
+                .and()
+                .oauth2Login()
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -61,9 +61,9 @@ public class SecurityConfig {
        return new BCryptPasswordEncoder();
 
     }
-
 @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
 }
     }

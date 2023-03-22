@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 import com.twilio.Twilio;
 import org.springframework.beans.factory.annotation.Value;
 
+/**
+ * Helps to send OTP through SMS
+ *
+ * */
+
 @Service
 public class TwilioService {
 

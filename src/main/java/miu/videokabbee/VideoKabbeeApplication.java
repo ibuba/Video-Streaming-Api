@@ -28,17 +28,11 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 		Address address1=new Address("400w Washington ","Fairfield",
 				                      "IA","52556");
 		Users user1=new Users(1L,"Ibrahim","Imam",31,"ADMIN",
-				"ibu", passwordEncoder.encode( "I@ibrahim1"),contact,address);
-		Users user2=new Users(2L,"abi","zaki",45,"ADMIN",
-				"abule", passwordEncoder.encode( "A@bule23"),contact1,address1);
+				 passwordEncoder.encode( "I@ibrahim1"),contact,address);
+		Users user2=new Users(2L,"abi","zaki",45,"ADMIN"
+				, passwordEncoder.encode( "A@bule23"),contact1,address1);
 		userInterfaceService.register(user1);
 		userInterfaceService.register(user2);
-	}
-
-
-	@Bean
-	public ModelMapper getModelMapper(){
-		return new ModelMapper();
 	}
 
 }
