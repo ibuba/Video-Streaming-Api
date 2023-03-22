@@ -8,15 +8,20 @@ import miu.videokabbee.config.security.JwtUtil;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
+import miu.videokabbee.dto.UserDTO;
 import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.TokenServiceInterface;
 import miu.videokabbee.service.UserInterfaceService;
+import miu.videokabbee.service.emailSender.EmailService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -33,37 +38,37 @@ public class UserServiceImpl implements UserInterfaceService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    TokenServiceInterface tokenServiceInterface;
+   TokenServiceInterface tokenServiceInterface;
+   @Autowired
+   PasswordEncoder passwordEncoder;
 
-
-    @Autowired
+   @Autowired
+    EmailService emailService;
+   @Autowired
 
     AuthenticationManager authenticationManager;
+   @Autowired
+    private ModelMapper modelMapper;
 
 
     public UserServiceImpl(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
-
-
     public String register(Users users) {
-        if (userRepository.existsByContact_Email(users.getContact().getEmail())) {
-            return "Email-taken";
-        } else if (userRepository.existsByUserName(users.getUserName())) {
-            return "Username-taken";
-
-        }
+        if(userRepository.existsByContact_Email(users.getContact().getEmail())){
+           return "Email-taken";
+        }else
         userRepository.save(users);
-        return "Success";
+        return users.getFirstName()+"Successfully registered ";
     }
-
-    public Users findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserDTO getUserById(Long id) {
+        var user =  userRepository.findById(id);
+         return (user.isPresent())?
+                modelMapper.map( user.get(),UserDTO.class): null;
     }
-
     @Override
     public List<Users> findAllUsers() {
-        return userRepository.findAll();
+       return userRepository.findAll();
     }
 
 
@@ -77,11 +82,9 @@ public class UserServiceImpl implements UserInterfaceService {
         token.setTokenName(tokenName);
         tokenServiceInterface.create(token);
     }
-
     @Override
     // Generating access Token for User
     public ResponseEntity<?> authenticate(String email, String password) {
-
         try {
             var user1 = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, password));
@@ -90,10 +93,7 @@ public class UserServiceImpl implements UserInterfaceService {
             String accessToken = jwtUtil.generateToken(user);
             LoginResponse l = new LoginResponse(accessToken, refreshToken);
             return new ResponseEntity<>(l, HttpStatus.OK);
-
-
         } catch (Exception e) {
-
             return new ResponseEntity<>("not authenticated", HttpStatus.OK);
         }
 
@@ -154,20 +154,33 @@ public class UserServiceImpl implements UserInterfaceService {
     }
 
 
+
+
+    // resting  password
+    @Override
+    public void resetPassword(String email,String password ) {
+        var user=   userRepository.findByContactEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException(
+                        "user-notFound to be  Rest password"));
+                user.setPassword(passwordEncoder.encode(password));
+                userRepository.save(user);
+    }
+
+
+
+
     @Override
     public String updateUserProfile(Users users) {
-        var user1 = userRepository.findByContactEmail(users.getContact().getEmail());
+        var user1 = userRepository.
+                findByContactEmail(users.getContact().getEmail());
         if (user1.isPresent()) {
             var user = user1.get();
             user.setFirstName(users.getFirstName());
-            user.setLastName(users.getUserName());
+            user.setLastName(users.getLastName());
             user.setAge(users.getAge());
-            user.setRole(users.getRole());
-            user.setUserName(users.getUserName());
             user.setPassword(users.getPassword());
-            user.setContact(users.getContact());
+            user.getContact().setPhone(users.getContact().getPhone());
             user.setAddress(users.getAddress());
-            user.setOtp(users.getOtp());
             userRepository.save(user);
             return "user Profile Updated Successfully";
         }

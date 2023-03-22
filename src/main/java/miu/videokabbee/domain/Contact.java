@@ -11,7 +11,13 @@ import lombok.*;
 @ToString
 public class Contact {
     private String phone;
+
+    public Contact(String email) {
+        this.email = email;
+    }
+
     @Email
     @NotNull(message="email should not be empty")
     private String email;
+
 }

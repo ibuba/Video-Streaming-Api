@@ -20,31 +20,22 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 
+
 public class UserDetailCustom implements UserDetailsService {
-
-
     public final UserRepository userRepository;
 
     // User To user Details changing  Method
-
-            @Override
+    @Override
             public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
                var user = userRepository.findByContactEmail(email);
 
                if(user.isPresent()){
-
                    Users user1 = user.get();
-                   List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-
-                   System.out.println(user1.getRole());
                    return new User(user1.getContact().getEmail(),user1.getPassword(),
-                           //authorities);
                            Collections.singleton(new SimpleGrantedAuthority(user1.getRole())));
-
-
                }else{
-                   return null;
+                   throw  new UsernameNotFoundException("User is  not  found in database");
                }
             }
         }
