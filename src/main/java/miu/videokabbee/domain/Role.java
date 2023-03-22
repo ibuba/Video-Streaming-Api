@@ -16,6 +16,7 @@ public class Role {
     @Id
     private Long id;
     private String name;
-    public Role(Role role) {
+    public Role(String  name) {
+        this.name= name;
     }
 }

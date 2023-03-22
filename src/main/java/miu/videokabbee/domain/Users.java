@@ -48,7 +48,7 @@ public class Users {
 <<<<<<< HEAD
     public Users(Long id, String firstName,
                  String lastName, int age,
-                 List<Role> role, String userName,
+                 List<Role> role,
                  String password, Contact contact,
                  Address address) {
 =======

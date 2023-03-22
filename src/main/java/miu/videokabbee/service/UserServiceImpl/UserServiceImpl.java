@@ -1,10 +1,6 @@
-<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
-package miu.videokabbee.service.UserService;
-=======
 package miu.videokabbee.service.UserServiceImpl;
 
 
->>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
 import miu.videokabbee.domain.Token;
@@ -16,12 +12,18 @@ import miu.videokabbee.dto.UserDTO;
 import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.TokenServiceInterface;
 <<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 import miu.videokabbee.repository.RoleRepository;
 =======
 import miu.videokabbee.service.UserInterfaceService;
 import miu.videokabbee.service.emailSender.EmailService;
 import org.modelmapper.ModelMapper;
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
+=======
+import miu.videokabbee.service.UserInterfaceService;
+import miu.videokabbee.service.emailSender.EmailService;
+import org.modelmapper.ModelMapper;
+>>>>>>> role-admin:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,11 +50,15 @@ public class UserServiceImpl implements UserInterfaceService {
     @Autowired
 <<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 <<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 
-   TokenServiceInterface tokenServiceInterface;
 =======
-    TokenServiceInterface tokenServiceInterface;
+>>>>>>> role-admin:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
+   TokenServiceInterface tokenServiceInterface;
+   @Autowired
+   PasswordEncoder passwordEncoder;
 
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 >>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
 
     @Autowired
@@ -65,14 +71,22 @@ public class UserServiceImpl implements UserInterfaceService {
     EmailService emailService;
    @Autowired
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
+=======
+   @Autowired
+    EmailService emailService;
+   @Autowired
+>>>>>>> role-admin:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
 
     AuthenticationManager authenticationManager;
    @Autowired
     private ModelMapper modelMapper;
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 
 
     @Autowired
     RoleRepository roleRepository;
+=======
+>>>>>>> role-admin:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
 
 
     public UserServiceImpl(AuthenticationManager authenticationManager) {
@@ -91,8 +105,8 @@ public class UserServiceImpl implements UserInterfaceService {
                 modelMapper.map( user.get(),UserDTO.class): null;
     }
     @Override
-<<<<<<< HEAD
     public List<Users> findAllUsers() {
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 <<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
         return userRepository.findAll();
 =======
@@ -111,6 +125,9 @@ public class UserServiceImpl implements UserInterfaceService {
 =======
        return userRepository.findAll();
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
+=======
+       return userRepository.findAll();
+>>>>>>> role-admin:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
     }
 
 
@@ -125,10 +142,13 @@ public class UserServiceImpl implements UserInterfaceService {
         tokenServiceInterface.create(token);
     }
 <<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
+<<<<<<< HEAD:src/main/java/miu/videokabbee/service/UserService/UserServiceImpl.java
 
 
 =======
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
+=======
+>>>>>>> role-admin:src/main/java/miu/videokabbee/service/UserServiceImpl/UserServiceImpl.java
     @Override
     // Generating access Token for User
     public ResponseEntity<?> authenticate(String email, String password) {
@@ -233,41 +253,5 @@ public class UserServiceImpl implements UserInterfaceService {
         }
         return "user is not found";
     }
-    /**
-     * the local date is used for calcultating the time of the user to be locked after many attempts
-     * the log in attempts counting and the restricted also for this method
-     */
-    private LocalDateTime startTime;
-    private int loginAttempt = 0;
-    private boolean restricted = false;
-
-
-    @Override
-        public int getLoginAttempt() {
-            return loginAttempt;
-        }
-
-
-    @Override
-        public void setLoginAttempt(int loginAttempt) {
-            this.loginAttempt = loginAttempt;
-        }
-
-    @Override
-    public ResponseEntity<?> checkAttemptAndLock() {
-        System.out.println(loginAttempt);
-        if (!restricted) {
-            this.restricted = true;
-            startTime = LocalDateTime.now();
-        }
-        Duration duration = Duration.between(startTime, LocalDateTime.now());
-        if (duration.getSeconds() > 10) {
-            loginAttempt = 0;
-            restricted = false;
-        }
-        return new ResponseEntity<>("so many attempts try again later after 12 sec currentTime= " + duration.getSeconds(), HttpStatus.OK);
-
-    }
-
-    }
+}
 

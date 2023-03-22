@@ -16,6 +16,7 @@ public interface UserRepository extends MongoRepository<Users, Long> {
     Optional<Users> findByContactEmail(String email);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     Users findByUserName(String userName);
 
 
@@ -26,4 +27,8 @@ public interface UserRepository extends MongoRepository<Users, Long> {
     @Override
     Optional<Users> findById(Long id);
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+    @Override
+    Optional<Users> findById(Long id);
+>>>>>>> role-admin
 }

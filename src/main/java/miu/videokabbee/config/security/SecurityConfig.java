@@ -24,14 +24,15 @@ public class SecurityConfig {
     private final UserDetailCustom userDetailsService;
 
     @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+       // ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
 
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**")
                 .permitAll()
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 //                .requestMatchers("/unAuthorized")
@@ -62,6 +63,8 @@ public class SecurityConfig {
 
                         .and()
 =======
+=======
+>>>>>>> role-admin
                 .requestMatchers("/user/register/**").hasAnyRole("ADMIN","GUEST","USER")
                 .requestMatchers("/user/{id}")
                 .hasRole("ADMIN")
@@ -70,14 +73,17 @@ public class SecurityConfig {
                 .and()
                 .oauth2Login()
                 .and()
+<<<<<<< HEAD
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+>>>>>>> role-admin
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider())
                         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-
                         ;
+<<<<<<< HEAD
 <<<<<<< HEAD
                        ;
 
@@ -92,20 +98,24 @@ public class SecurityConfig {
     }@Bean
     public AuthenticationProvider authenticationProvider() {
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+        return http.build();
+    }@Bean
+    public AuthenticationProvider authenticationProvider() {
+>>>>>>> role-admin
        final DaoAuthenticationProvider authenticationProvider=
                new DaoAuthenticationProvider();
        authenticationProvider
                .setUserDetailsService(userDetailsService);
        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        System.out.println("in the authentication ");
        return  authenticationProvider;
     }
 @Bean
-
-    public BCryptPasswordEncoder passwordEncoder() throws Exception {
+    public BCryptPasswordEncoder passwordEncoder() {
        return new BCryptPasswordEncoder();
 
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     @Bean
@@ -115,18 +125,13 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config) throws Exception {
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
-        return config.getAuthenticationManager();
-<<<<<<< HEAD
-    }
-
-
-    }
-
-
 =======
+@Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+>>>>>>> role-admin
+        return config.getAuthenticationManager();
 }
-
     }
 
 
->>>>>>> new_branch

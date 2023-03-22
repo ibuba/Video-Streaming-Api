@@ -7,18 +7,13 @@ import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
 import miu.videokabbee.service.TokenServiceInterface;
-<<<<<<< HEAD
-import miu.videokabbee.service.UserService.UserServiceImpl;
-import miu.videokabbee.service.twilio.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-=======
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
+<<<<<<< HEAD
 import miu.videokabbee.service.tillo.UserService;
+=======
+
+import miu.videokabbee.service.twilio.UserService;
+>>>>>>> role-admin
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,13 +21,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
->>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Validated
 public class UserController {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -41,6 +36,8 @@ public class UserController {
 
 =======
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+>>>>>>> role-admin
     private final UserServiceImpl userInterfaceService;
     private final PasswordEncoder passwordEncoder;
 
@@ -48,19 +45,6 @@ public class UserController {
     private  final UserService userService;
 
 
-<<<<<<< HEAD
-   //Extra role assignment by admin
-//    @PostMapping("/{username}/roles/{roleName}")
-//    public void assignRoleToUser(@RequestBody Role role , @PathVariable String userName) {
-//        userService.assignRoleToUser(role , userName);
-//    }
-
-    //hasRole
-    @GetMapping("/{username}/hasRole/{roleName}")
-    public boolean hasRole(@PathVariable String roleName, @PathVariable String userName) {
-        return userService.hasRole(roleName, userName);
-    }
-=======
     // Getting All Users
     @GetMapping
     public ResponseEntity<?> getAllUsers(){
@@ -74,10 +58,13 @@ public class UserController {
 
   // Getting user By Id
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
 =======
     // done well
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+>>>>>>> role-admin
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable  Long id) {
         var user = userInterfaceService.getUserById(id);
@@ -90,10 +77,7 @@ public class UserController {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
     }
-<<<<<<< HEAD
-=======
  //Registering new Users
->>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody Users users) {
         String encodedPassword = passwordEncoder.encode(users.getPassword());
@@ -113,8 +97,10 @@ public class UserController {
             return ResponseEntity.badRequest().body("Could not log out your account is still active");
         }
 
+
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     @Autowired
     private UserService userService;
@@ -126,6 +112,11 @@ public class UserController {
     @PostMapping("/resetEmail")
     public ResponseEntity<?> resetPasswordByEmail(@RequestParam String email) {
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+// Resting By Email
+    @PostMapping("/resetEmail")
+    public ResponseEntity<?> resetPasswordByEmail(@RequestParam String email) {
+>>>>>>> role-admin
         try {
             userService.resetPasswordByEmail(email);
             return ResponseEntity.ok().build();
@@ -185,6 +176,7 @@ public class UserController {
             return new ResponseEntity<>(new ExceptionHandling("user is not found"),HttpStatus.NOT_FOUND);
 
     }
+
 
 }
 

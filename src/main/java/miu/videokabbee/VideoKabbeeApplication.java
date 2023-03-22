@@ -1,15 +1,10 @@
 package miu.videokabbee;
-<<<<<<< HEAD
-=======
 
-import lombok.RequiredArgsConstructor;
->>>>>>> new_branch
 import miu.videokabbee.domain.Address;
 import miu.videokabbee.domain.Contact;
 import miu.videokabbee.domain.Role;
 import miu.videokabbee.domain.Users;
-import miu.videokabbee.service.UserService.UserInterfaceService;
-import miu.videokabbee.service.roleService.RoleService;
+import miu.videokabbee.service.UserInterfaceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,21 +12,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-<<<<<<< HEAD
-import java.util.List;
-
-	@SpringBootApplication
-	public class VideoKabbeeApplication implements CommandLineRunner {
-
-		@Autowired
-		UserInterfaceService userInterfaceService;
-=======
 
 import java.util.List;
 
 @SpringBootApplication
-@RequiredArgsConstructor
 public class VideoKabbeeApplication implements CommandLineRunner {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -79,6 +65,8 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 
 	@Override
 =======
+=======
+>>>>>>> role-admin
 	@Autowired
 	UserInterfaceService userInterfaceService;
 	@Autowired
@@ -86,11 +74,15 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(VideoKabbeeApplication.class, args);
 	}@Override
+<<<<<<< HEAD
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+>>>>>>> role-admin
 	public void run(String... args) throws Exception {
 		Contact contact= new Contact("+15205994323","ibrahim.imam642@gmail.com");
 		Contact contact1= new Contact("+15205778890","imam642@gmail.com");
 		Address address=new Address("s","city","ca","12334");
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		Users aa=new Users(1L,"abi","zaki",45,"USER",
@@ -117,7 +109,16 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 		userInterfaceService.register(user1);
 		userInterfaceService.register(user2);
 >>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+		Address address1=new Address("400w Washington ","Fairfield",
+				                      "IA","52556");
+		Users user1=new Users(1L,"Ibrahim","Imam",31, List.of(new Role("ADMIN")),
+				 passwordEncoder.encode( "I@ibrahim1"),contact,address);
+		Users user2=new Users(2L,"abi","zaki",45,List.of(new Role("ADMIN"),new Role("USER"))
+				, passwordEncoder.encode( "A@bule23"),contact1,address1);
+		userInterfaceService.register(user1);
+		userInterfaceService.register(user2);
+>>>>>>> role-admin
 	}
 
 }
->>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
