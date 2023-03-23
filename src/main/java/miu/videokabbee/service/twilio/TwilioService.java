@@ -1,11 +1,9 @@
-package miu.videokabbee.service.tillo;
+package miu.videokabbee.service.twilio;
 
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.twilio.Twilio;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Helps to send OTP through SMS

@@ -6,7 +6,7 @@ import miu.videokabbee.controller.UserController;
 import miu.videokabbee.domain.Contact;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LogInRequest;
-import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
+import miu.videokabbee.service.UserService.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

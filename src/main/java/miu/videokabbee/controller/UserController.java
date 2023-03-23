@@ -8,7 +8,12 @@ import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
 import miu.videokabbee.service.TokenServiceInterface;
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
+<<<<<<< HEAD
 import miu.videokabbee.service.tillo.UserService;
+=======
+
+import miu.videokabbee.service.twilio.UserService;
+>>>>>>> role-admin
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +27,17 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Validated
 public class UserController {
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+
+//   @Autowired
+//    private TwilioOTPHandler handler;
+
+=======
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+>>>>>>> role-admin
     private final UserServiceImpl userInterfaceService;
     private final PasswordEncoder passwordEncoder;
 
@@ -41,7 +57,14 @@ public class UserController {
     }
 
   // Getting user By Id
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> ba75bc6b6734c38dda88ea4c40ab3229737c6800
+=======
     // done well
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+>>>>>>> role-admin
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable  Long id) {
         var user = userInterfaceService.getUserById(id);
@@ -74,11 +97,26 @@ public class UserController {
             return ResponseEntity.badRequest().body("Could not log out your account is still active");
         }
 
+
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    @Autowired
+    private UserService userService;
+ // User Password Reset
+    @PostMapping("/reset/{email}")
+    public ResponseEntity<?> resetPassword(@PathVariable String email) {
+=======
 // Resting By Email
     @PostMapping("/resetEmail")
     public ResponseEntity<?> resetPasswordByEmail(@RequestParam String email) {
+>>>>>>> d0ebfed7235935f4e1a272c3a02a701250becfb2
+=======
+// Resting By Email
+    @PostMapping("/resetEmail")
+    public ResponseEntity<?> resetPasswordByEmail(@RequestParam String email) {
+>>>>>>> role-admin
         try {
             userService.resetPasswordByEmail(email);
             return ResponseEntity.ok().build();

@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 public class Token {
     @Id
-
     String id;
     String tokenName;
 }

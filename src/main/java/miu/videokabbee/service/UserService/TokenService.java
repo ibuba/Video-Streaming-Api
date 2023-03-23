@@ -1,4 +1,4 @@
-package miu.videokabbee.service.UserServiceImpl;
+package miu.videokabbee.service.UserService;
 
 import miu.videokabbee.domain.Token;
 import miu.videokabbee.repository.TokenRepository;
@@ -9,11 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TokenService implements TokenServiceInterface {
 
-
     @Autowired
     TokenRepository tokenRepository;
-
-
     public void create(Token token){
         tokenRepository.save(token);
     }
