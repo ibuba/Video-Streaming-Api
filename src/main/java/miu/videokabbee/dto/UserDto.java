@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 
 // user DTO
-public class UserDTO {
+public class UserDto {
         @NotBlank(message="first name cant be null")
         private String firstName;
         @NotBlank(message="last name cant be null")
@@ -39,14 +39,14 @@ public class UserDTO {
         @Autowired
         private static ModelMapper modelMapper;
         //
-        public static List<UserDTO> listUsersDto(List<Users> users) {
+        public static List<UserDto> listUsersDto(List<Users> users) {
             return users
                     .stream()
-                    .map(user -> modelMapper.map(user, UserDTO.class))
+                    .map(user -> modelMapper.map(user, UserDto.class))
                     .collect(Collectors.toList());
         }
-        public static UserDTO toDTo(Users user) {
-            return UserDTO.builder()
+        public static UserDto toDTo(Users user) {
+            return UserDto.builder()
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
                     .age(user.getAge())
@@ -54,7 +54,7 @@ public class UserDTO {
                     .email(user.getContact().getEmail())
 
                     .build();
-        }public static Users  toUsers(UserDTO user) {
+        }public static Users  toUsers(UserDto user) {
             return   Users.builder()
                      .firstName(user.getFirstName())
                      .lastName(user.getLastName())

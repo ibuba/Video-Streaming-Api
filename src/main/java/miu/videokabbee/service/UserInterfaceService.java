@@ -4,14 +4,14 @@ package miu.videokabbee.service;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
-import miu.videokabbee.dto.UserDTO;
+import miu.videokabbee.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface UserInterfaceService {
     String register(Users users);
-    UserDTO getUserById(Long id);
+    UserDto getUserById(Long id);
     List<Users> findAllUsers();
     ResponseEntity<?> authenticate(String  email, String password );
     LoginResponse refreshToken(RefreshTokenRequest refreshTokenRequest);

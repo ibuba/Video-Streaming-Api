@@ -4,10 +4,6 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.emailSender.EmailService;
-<<<<<<< HEAD
-import miu.videokabbee.service.tillo.UserService;
-=======
->>>>>>> role-admin
 import org.springframework.stereotype.Component;
 
 
