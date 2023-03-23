@@ -58,5 +58,11 @@ public class VideoController {
              return new ResponseEntity<>(new ExceptionHandling("video is not found"),HttpStatus.NOT_FOUND);
 
      }
+     // deleting video
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteVideoById(@PathVariable("id") Long id{
+        videoService.deleteVideo(id);
+        return ResponseEntity.ok().build();
+    }
 
 }
