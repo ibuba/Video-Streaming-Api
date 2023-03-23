@@ -1,4 +1,4 @@
-package miu.videokabbee.controller;
+package miu.videokabbee.controller.authController;
 
 
 import lombok.RequiredArgsConstructor;

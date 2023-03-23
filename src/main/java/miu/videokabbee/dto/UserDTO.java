@@ -4,7 +4,7 @@ import lombok.*;
 import miu.videokabbee.domain.Contact;
 import miu.videokabbee.domain.Users;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 
 // user DTO
 public class UserDTO {
+
+
+
         @NotBlank(message="first name cant be null")
         private String firstName;
         @NotBlank(message="last name cant be null")
@@ -36,8 +39,11 @@ public class UserDTO {
                 message = "Age must be a 1 or 2-digit number")
         private  Integer age;
 
-        @Autowired
-        private static ModelMapper modelMapper;
+//    @Autowired
+    /**
+     * autowiring static methods is not needed*/
+
+    private static ModelMapper modelMapper;
         //
         public static List<UserDTO> listUsersDto(List<Users> users) {
             return users

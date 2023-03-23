@@ -1,11 +1,9 @@
 package miu.videokabbee;
 
-import miu.videokabbee.ExceptionHandling.ExceptionHandling;
-import miu.videokabbee.controller.AuthenticationController;
-import miu.videokabbee.controller.UserController;
+import miu.videokabbee.controller.authController.AuthenticationController;
+import miu.videokabbee.controller.userController.UserController;
 import miu.videokabbee.domain.Contact;
 import miu.videokabbee.domain.Users;
-import miu.videokabbee.dto.LogInRequest;
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,12 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
