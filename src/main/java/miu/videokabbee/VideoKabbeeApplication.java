@@ -1,12 +1,11 @@
 package miu.videokabbee;
 
 import lombok.RequiredArgsConstructor;
-import miu.videokabbee.domain.Address;
-import miu.videokabbee.domain.Contact;
-import miu.videokabbee.domain.Role;
-import miu.videokabbee.domain.Users;
+import miu.videokabbee.domain.*;
+import miu.videokabbee.repository.VideoRepository;
 import miu.videokabbee.service.UserInterfaceService;
 import miu.videokabbee.service.roleService.RoleService;
+import miu.videokabbee.service.videoservice.VideoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -25,6 +26,8 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 	private  final  RoleService roleService;
 
 	private  final PasswordEncoder passwordEncoder;
+	private final VideoService videoService;
+	private final VideoRepository videoRepository;
 
 	public static void main(String[] args) {
 
@@ -44,6 +47,11 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 					1L, "ADMIN"), new Role(2L, "GUEST")),
 					passwordEncoder.encode("1234"), contact, address);
 			userInterfaceService.register(aa);
+
+			LocalDate localDate=LocalDate.now();
+			Video video= new Video("1","Kabbee app","https://kabbee.com/shanga-group-video.mp4",true,
+					localDate);
+			videoRepository.save(video);
 		}
 
 }
