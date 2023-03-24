@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      database: video-stream
+      database: video-stream-app
       host: localhost
       port: 27017
       uuid-representation: standard

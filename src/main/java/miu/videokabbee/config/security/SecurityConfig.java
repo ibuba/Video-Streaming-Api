@@ -36,6 +36,7 @@ public class SecurityConfig {
             .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
             .requestMatchers("/user/register/**")
             .permitAll()
+            .requestMatchers("/videos/**").permitAll()//should be changed ;later
                 .anyRequest()
                 .authenticated()
                 .and().sessionManagement()
