@@ -22,7 +22,9 @@ public class Video {
     private String url;
     private boolean isPublic;
     private LocalDate expirationDate;
-
+    private String genre;
+    private String description;
+    private String popularity;
 
 
 
@@ -33,6 +35,7 @@ public class Video {
         this.isPublic = isPublic;
         this.expirationDate = expirationDate;
     }
+
 
 
     public void put(String url, Video video) {

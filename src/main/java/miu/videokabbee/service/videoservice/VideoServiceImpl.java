@@ -41,6 +41,11 @@ public class VideoServiceImpl implements VideoService{
         return Optional.ofNullable(videoRepository.findByTitle(title).orElse(null));
     }
 
+    public List<Video> searchVideos(String word) {
+        return   videoRepository.findByTitleContainingOrGenreContainingOrPopularityContaining(word,word,word)
+                .orElse(null);
+    }
+
 
 
 }

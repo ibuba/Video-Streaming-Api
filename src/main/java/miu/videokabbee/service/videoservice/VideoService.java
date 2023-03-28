@@ -16,4 +16,6 @@ public interface VideoService {
     Optional<Video> getVideoWithId(String id);
     Optional<Video>  getVideoWithTitle(String title);
 
+    List<Video> searchVideos(String word);
+
 }

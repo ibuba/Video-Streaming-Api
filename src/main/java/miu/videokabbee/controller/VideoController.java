@@ -23,25 +23,31 @@ public class VideoController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllVideos(){
+    public ResponseEntity<?> getAllVideos() {
         List<Video> videos = videoService.getAllVideos();
         return new ResponseEntity<>(videos, HttpStatus.OK);
     }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getVideoWithId(@PathVariable("id") String id) {
-        Video video=videoService.getVideoWithId(id).orElse(null);;
+        Video video = videoService.getVideoWithId(id).orElse(null);
+        ;
         return new ResponseEntity<>(video, HttpStatus.OK);
     }
+
     @GetMapping("/{title}")
     public ResponseEntity<?> getVideoWithTitle(@PathVariable("title") String title) {
-        Video video= videoService.getVideoWithTitle(title).orElse(null);;
+        Video video = videoService.getVideoWithTitle(title).orElse(null);
+        ;
         return new ResponseEntity<>(video, HttpStatus.OK);
     }
 
     @GetMapping("/{url}")
     public ResponseEntity<?> getVideoWithUrl(@PathVariable("url") String url) {
-        Video video= videoService.getVideoWithUrl(url).orElse(null);;
-    return new ResponseEntity<>(video, HttpStatus.OK);
+        Video video = videoService.getVideoWithUrl(url).orElse(null);
+        ;
+        return new ResponseEntity<>(video, HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -50,4 +56,15 @@ public class VideoController {
         videoService.addVideo(video);
         return new ResponseEntity<>("Video created successfully.", HttpStatus.CREATED);
     }
-}
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchVideo(@RequestParam("movie") String word) {
+        var searchedVideo = videoService.searchVideos(word);
+        if (searchedVideo.isEmpty()) {
+            return new ResponseEntity<>( "no video found with the keyword given", HttpStatus.NOT_FOUND);
+
+        }
+        return new ResponseEntity<>(searchedVideo, HttpStatus.OK);
+        }
+    }
+

@@ -21,37 +21,40 @@ import java.util.List;
 @SpringBootApplication
 @RequiredArgsConstructor
 public class VideoKabbeeApplication implements CommandLineRunner {
-	private  final UserInterfaceService userInterfaceService;
+	private final UserInterfaceService userInterfaceService;
 
-	private  final  RoleService roleService;
+	private final RoleService roleService;
 
-	private  final PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 	private final VideoService videoService;
 	private final VideoRepository videoRepository;
 
 	public static void main(String[] args) {
 
-			SpringApplication.run(VideoKabbeeApplication.class, args);
-		}
+		SpringApplication.run(VideoKabbeeApplication.class, args);
+	}
 
-		@Override
-		public void run(String... args) throws Exception {
+	@Override
+	public void run(String... args) throws Exception {
 
-			Contact contact = new Contact("+15205994323", "abule@gmail.com");
-			Address address = new Address("s", "city", "ca", "12334");
+		Contact contact = new Contact("+15205994323", "abule@gmail.com");
+		Address address = new Address("s", "city", "ca", "12334");
 
-			Users aa = new Users(1L, "abi", "zaki", 45,List.of(new Role(1l,"ADMIN")),
-					 passwordEncoder.encode("1234"), contact, address);
+		Users aa = new Users(1L, "abi", "zaki", 45, List.of(new Role(1l, "ADMIN")),
+				passwordEncoder.encode("1234"), contact, address);
 
-			Users aa2 = new Users(1L, "abi", "zaki", 45, List.of(new Role(
-					1L, "ADMIN"), new Role(2L, "GUEST")),
-					passwordEncoder.encode("1234"), contact, address);
-			userInterfaceService.register(aa);
+		Users aa2 = new Users(1L, "abi", "zaki", 45, List.of(new Role(
+				1L, "ADMIN"), new Role(2L, "GUEST")),
+				passwordEncoder.encode("1234"), contact, address);
+		userInterfaceService.register(aa);
 
-			LocalDate localDate=LocalDate.now();
-			Video video= new Video("1","Kabbee app","https://kabbee.com/shanga-group-video.mp4",true,
+		LocalDate localDate=LocalDate.now();
+			Video video= new Video("1","Kabbeeapphttps://kabbee.com/shanga-group-video.mp4",true,
 					localDate);
+			Video video1 = new Video("2","Hero","url1",true,localDate,"gener1","desc1","2 star");
 			videoRepository.save(video);
+			videoRepository.save(video1);
 		}
 
-}
+	}
+
