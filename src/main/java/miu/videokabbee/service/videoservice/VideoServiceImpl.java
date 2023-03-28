@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class VideoServiceImpl implements VideoService{
+public class VideoServiceImpl implements VideoService {
 
     @Autowired
     private VideoRepository videoRepository;

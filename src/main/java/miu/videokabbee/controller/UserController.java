@@ -15,10 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static miu.videokabbee.controller.router.UserRouter.*;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 @Validated
 public class UserController {
@@ -34,7 +35,7 @@ public class UserController {
 
 
     // Getting All Users
-    @GetMapping
+    @GetMapping(userList)
     public ResponseEntity<?> getAllUsers(){
         var users = userInterfaceService.findAllUsers();
         return (users.size()>1)?
@@ -46,7 +47,7 @@ public class UserController {
 
   // Getting user By Id
 
-    @GetMapping("/{id}")
+    @GetMapping(userId)
     public ResponseEntity<?> getUserByID(@PathVariable  Long id) {
         var user = userInterfaceService.getUserById(id);
         if (user == null) {
@@ -59,7 +60,7 @@ public class UserController {
         }
     }
  //Registering new Users
-    @PostMapping("/register")
+    @PostMapping(newUser)
     public ResponseEntity<?> registerUser(@Valid @RequestBody Users users) {
         String encodedPassword = passwordEncoder.encode(users.getPassword());
         users.setPassword(encodedPassword);
@@ -69,7 +70,7 @@ public class UserController {
         }
         return new ResponseEntity<>(userRegistered, HttpStatus.OK);
     }
-    @GetMapping("/logout")
+    @GetMapping(logout)
     public ResponseEntity<String> logout(HttpServletRequest request) {
         try {
             userInterfaceService.logOut(request);
@@ -85,7 +86,7 @@ public class UserController {
 
 // Resting By Email
 
-    @PostMapping("/resetEmail")
+    @PostMapping(restByEmail)
     public ResponseEntity<?> resetPasswordByEmail(@RequestParam String email) {
 
         try {
@@ -95,7 +96,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-        @PostMapping("/resetBySms")
+        @PostMapping(resetBySms)
         public ResponseEntity<?> resetPasswordBySms(@RequestParam String email) {
             try {
                 userService.resetPasswordBySms(email);
@@ -104,7 +105,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
             }
     }
-    @PostMapping("/resPassword")
+    @PostMapping(resetPassword)
     public  ResponseEntity<?>resetPassword(
             @RequestParam String email,
             @RequestParam String newPassword){
@@ -119,7 +120,7 @@ public class UserController {
     }
 
     // verification of OTP
-    @PostMapping("/verify-otp")
+    @PostMapping(verify)
     public ResponseEntity<?> verifyOtp(
             @RequestParam String email,
             @RequestParam String otp){
@@ -132,13 +133,13 @@ public class UserController {
         }
     }
     // Generating refreshToken
-    @PostMapping("/refreshToken")
+    @PostMapping(refreshToken)
     public LoginResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest){
         return userInterfaceService.refreshToken(refreshTokenRequest);
     }
 
 // Updating Users profile
-    @PutMapping("/update")
+    @PutMapping(update)
     public ResponseEntity<?> updateUserProfile( @RequestBody Users users){
         var user = userInterfaceService.updateUserProfile( users);
         if(user !=null)
