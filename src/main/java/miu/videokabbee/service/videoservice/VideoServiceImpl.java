@@ -1,5 +1,6 @@
-package miu.videokabbee.service.videoservice;
 
+package miu.videokabbee.service.videoservice;
+import miu.videokabbee.domain.Comment;
 import miu.videokabbee.domain.Video;
 import miu.videokabbee.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,31 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public Optional<Video> getVideoWithTitle(String title) {
         return Optional.ofNullable(videoRepository.findByTitle(title).orElse(null));
+    }
+    @Override
+    public List<Comment> getCommentsByVideoId(String videoId) {
+        return videoRepository.findCommentsByVideoId(videoId);
+    }
+
+    @Override
+    public void incrementViewCount(String videoId) {
+        Video video = videoRepository.findById(videoId).orElseThrow(() -> new RuntimeException("Video not found"));
+        video.incrementViewCount();
+        videoRepository.save(video);
+    }
+
+    @Override
+    public Comment addCommentToVideo(String videoId, Comment comment) {
+        Video video = videoRepository.findById(videoId).orElseThrow(() -> new RuntimeException("Video not found"));
+        video.addComment(comment);
+        videoRepository.save(video);
+        return videoRepository.saveComment(comment);
+    }
+    @Override
+    public void incrementLikeCount(String videoId) {
+        Video video = videoRepository.findById(videoId).orElseThrow(() -> new RuntimeException("Video not found"));
+        video.incrementLikeCount();
+        videoRepository.save(video);
     }
 
 
