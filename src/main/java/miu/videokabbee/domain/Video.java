@@ -42,6 +42,19 @@ public class Video {
         this.expirationDate = expirationDate;
     }
 
+    public Video(String videoId, String title, String url, boolean isPublic, LocalDate expirationDate, String genre, String description, String popularity) {
+   this.videoId=videoId;
+   this.title =title;
+   this.url = url;
+   this.isPublic = isPublic;
+   this.expirationDate = expirationDate;
+   this.genre = genre;
+   this.description = description;
+   this.popularity = popularity;
+
+
+    }
+
 
     public void put(String url, Video video) {
         // Check if the video already exists in the system
