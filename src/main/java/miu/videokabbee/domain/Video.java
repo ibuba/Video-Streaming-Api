@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import miu.videokabbee.domain.Comment;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +25,9 @@ public class Video {
     private String url;
     private boolean isPublic;
     private LocalDate expirationDate;
+    private int viewCount;
+    private int likeCount;
+    private List<Comment> comments;
     private String genre;
     private String description;
     private String popularity;
@@ -37,7 +43,6 @@ public class Video {
     }
 
 
-
     public void put(String url, Video video) {
         // Check if the video already exists in the system
         if (video.equals(video)) {
@@ -48,4 +53,19 @@ public class Video {
         Video videos = new Video(title, url, isPublic, expirationDate);
         videos.put(url, video);
     }
+    public void incrementLikeCount() {
+        likeCount++;
+    }
+    public void addComment(Comment comment) {
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
+        comments.add(comment);
+    }
+
+    public void incrementViewCount() {
+        this.viewCount++;
+    }
+
 }
+
