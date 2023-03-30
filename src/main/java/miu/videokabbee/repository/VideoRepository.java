@@ -1,4 +1,3 @@
-
 package miu.videokabbee.repository;
 import miu.videokabbee.domain.Comment;
 import miu.videokabbee.domain.Video;
@@ -15,8 +14,11 @@ public interface VideoRepository extends MongoRepository<Video,String> {
     Optional<Video> findByTitle(String title);
     Optional<Video> findByUrl(String url);
     List<Comment> findCommentsByVideoId(String videoId);
+    Optional<List<Video>> findByTitleContainingOrGenreContainingOrPopularityContaining(String title, String genre, String popularity);
+
 
 
 }
+
 
 

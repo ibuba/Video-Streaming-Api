@@ -1,4 +1,3 @@
-
 package miu.videokabbee.controller;
 
 import miu.videokabbee.ExceptionHandling.ExceptionHandling;
@@ -91,5 +90,16 @@ public class VideoController {
         System.out.println(commentDto.getText());
         return ResponseEntity.ok().build();
     }
+    // Searing a video by movie name 
+    @GetMapping("/search")
+    public ResponseEntity<?> searchVideo(@RequestParam("movie") String word) {
+        var searchedVideo = videoService.searchVideos(word);
+        if (searchedVideo.isEmpty()) {
+            return new ResponseEntity<>( "no video found with the keyword given", HttpStatus.NOT_FOUND);
+
+        }
+        return new ResponseEntity<>(searchedVideo, HttpStatus.OK);
+        }
 
 }
+
