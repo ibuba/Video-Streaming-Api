@@ -14,7 +14,7 @@ public interface VideoService {
     Optional<Video>  getVideoWithUrl(String url);
     Optional<Video> getVideoWithId(String id);
     Optional<Video>  getVideoWithTitle(String title);
-    Comment addCommentToVideo(String videoId, Comment comment) ;
+//    Comment addCommentToVideo(String videoId, Comment comment) ;
 
     List<Comment> getCommentsByVideoId(String videoId);
 
@@ -22,5 +22,8 @@ public interface VideoService {
     void incrementViewCount(String videoId);
 
     void incrementLikeCount(String videoId);
+
+    // dfferent way to add coment
+    void addCommentToVideo(Long userId, String videoId, String text);
 
 }
