@@ -41,15 +41,15 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 			Address address = new Address("s", "city", "ca", "12334");
 
 			Users aa = new Users(1L, "abi", "zaki", 45,List.of(new Role(1l,"ADMIN")),
-					 passwordEncoder.encode("1234"), contact, address);
+					 passwordEncoder.encode("1234@abiA"), contact, address);
 
 			Users aa2 = new Users(1L, "abi", "zaki", 45, List.of(new Role(
-					1L, "ADMIN"), new Role(2L, "GUEST")),
-					passwordEncoder.encode("1234"), contact, address);
+					1L, "ADMIN")),
+					passwordEncoder.encode("1234@abiA"), contact, address);
 			userInterfaceService.register(aa);
 
 			LocalDate localDate=LocalDate.now();
-			Video video= new Video("1","Kabbee app","https://kabbee.com/shanga-group-video.mp4",true,
+			Video video= new Video("1","Kabbee app","https://www.youtube.com/watch?v=gsmR3nkc12c",true,
 					localDate);
 			videoRepository.save(video);
 		}

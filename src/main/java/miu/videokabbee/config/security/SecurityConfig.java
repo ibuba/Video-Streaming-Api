@@ -30,13 +30,15 @@ public class SecurityConfig {
     http
                 .csrf().disable()
                         .authorizeHttpRequests()
-            .requestMatchers("/admin/**").hasRole("ADMIN")
-            .requestMatchers("/user/{id}")
-            .hasRole("ADMIN")
-            .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
-            .requestMatchers("/user/register/**")
+           // .requestMatchers("/admin/**").hasRole("ADMIN")
+            .requestMatchers("/api/auth/**").permitAll()
+            //.requestMatchers("/user/**").hasRole("ADMIN")//hasAnyRole("USER","ADMIN")
+            .requestMatchers("/users/register/**")
             .permitAll()
-            .requestMatchers("/videos/**").permitAll()//should be changed ;later
+            .requestMatchers("/users/{id}")
+            .permitAll()
+            //.hasRole("ADMIN")
+           // .requestMatchers("/videos/**").permitAll()//should be changed ;later
                 .anyRequest()
                 .authenticated()
                 .and().sessionManagement()

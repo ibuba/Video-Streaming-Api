@@ -39,6 +39,7 @@ public class VideoController {
             return new ResponseEntity<>(new ExceptionHandling("no Videos With " +id)+" found",HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(video, HttpStatus.OK);
+
     }
 
     @GetMapping(videoTitle)
