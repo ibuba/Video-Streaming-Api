@@ -1,15 +1,16 @@
+
 package miu.videokabbee.controller;
 
 import miu.videokabbee.ExceptionHandling.ExceptionHandling;
-import miu.videokabbee.controller.router.VideoRouter;
-import miu.videokabbee.domain.Role;
+import miu.videokabbee.domain.Comment;
 import miu.videokabbee.domain.Video;
+import miu.videokabbee.dto.CommentDto;
 import miu.videokabbee.service.videoservice.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -65,4 +66,30 @@ public class VideoController {
         videoService.addVideo(video);
         return new ResponseEntity<>("Video created successfully.", HttpStatus.CREATED);
     }
+    @GetMapping("/{videoId}/comments")
+    public ResponseEntity<List<Comment>> getCommentsByVideoId(@PathVariable String videoId) {
+        List<Comment> comments = videoService.getCommentsByVideoId(videoId);
+        return ResponseEntity.ok(comments);
+    }
+
+
+    @PostMapping("/{videoId}/view")
+    public ResponseEntity<Void> incrementViewCount(@PathVariable String videoId) {
+        videoService.incrementViewCount(videoId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{videoId}/like")
+    public ResponseEntity<Void> incrementLikeCount(@PathVariable String videoId) {
+        videoService.incrementLikeCount(videoId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{videoId}/comments")
+    public ResponseEntity<Void> addCommentToVideo(@PathVariable String videoId, @RequestBody CommentDto commentDto) {
+        videoService.addCommentToVideo(commentDto.getUserId(), videoId, commentDto.getText());
+        System.out.println(commentDto.getText());
+        return ResponseEntity.ok().build();
+    }
+
 }

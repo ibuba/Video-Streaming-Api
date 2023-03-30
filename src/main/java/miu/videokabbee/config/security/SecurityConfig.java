@@ -25,43 +25,45 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       // ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
+        // ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
 
-    http
+        http
                 .csrf().disable()
-                        .authorizeHttpRequests()
-            .requestMatchers("/admin/**").hasRole("ADMIN")
-            .requestMatchers("/user/{id}")
-            .hasRole("ADMIN")
-            .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
-            .requestMatchers("/user/register/**")
-            .permitAll()
-            .requestMatchers("/videos/**").permitAll()//should be changed ;later
+                .authorizeHttpRequests()
+                // .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/auth/**").permitAll()
+                //.requestMatchers("/user/**").hasRole("ADMIN")//hasAnyRole("USER","ADMIN")
+                .requestMatchers("/users/register/**")
+                .permitAll()
+                .requestMatchers("/users/{id}")
+                .permitAll()
+                //.hasRole("ADMIN")
+                // .requestMatchers("/videos/**").permitAll()//should be changed ;later
                 .anyRequest()
                 .authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider())
-                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                        ;
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        ;
 
-    return http.build();
+        return http.build();
     }
 
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-       final DaoAuthenticationProvider authenticationProvider=
-               new DaoAuthenticationProvider();
-       authenticationProvider
-               .setUserDetailsService(userDetailsService);
-       authenticationProvider.setPasswordEncoder(passwordEncoder());
-       return  authenticationProvider;
+        final DaoAuthenticationProvider authenticationProvider=
+                new DaoAuthenticationProvider();
+        authenticationProvider
+                .setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return  authenticationProvider;
     }
-@Bean
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-       return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
 
     }
     @Bean
@@ -69,7 +71,5 @@ public class SecurityConfig {
     authenticationManager(AuthenticationConfiguration config) throws Exception {
 
         return config.getAuthenticationManager();
-}
     }
-
-
+}
