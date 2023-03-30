@@ -28,7 +28,9 @@ public class UserDetailCustom implements UserDetailsService {
 
                if(user.isPresent()){
                    Users user1 = user.get();
-
+                   var aa=user1.getRole().stream().map(role ->
+                           new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+                   System.out.println(aa);
                    return new User(user1.getContact().getEmail(),user1.getPassword(),
 
 

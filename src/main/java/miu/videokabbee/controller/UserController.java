@@ -6,6 +6,7 @@ import miu.videokabbee.ExceptionHandling.ExceptionHandling;
 import miu.videokabbee.domain.Users;
 import miu.videokabbee.dto.LoginResponse;
 import miu.videokabbee.dto.RefreshTokenRequest;
+import miu.videokabbee.repository.UserRepository;
 import miu.videokabbee.service.TokenServiceInterface;
 import miu.videokabbee.service.UserServiceImpl.UserServiceImpl;
 import miu.videokabbee.service.twilio.UserService;
@@ -32,6 +33,7 @@ public class UserController {
 
     private final TokenServiceInterface tokenServiceInterface;
     private  final UserService userService;
+    //private final UserRepository userRepository;
 
 
     // Getting All Users
@@ -45,6 +47,8 @@ public class UserController {
         HttpStatus.NOT_FOUND);
     }
 
+
+
   // Getting user By Id
 
     @GetMapping(userId)
@@ -57,6 +61,7 @@ public class UserController {
                     HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(user, HttpStatus.OK);
+            //return new ResponseEntity<>(userRepository.findById(id), HttpStatus.OK);
         }
     }
  //Registering new Users
@@ -66,6 +71,7 @@ public class UserController {
         users.setPassword(encodedPassword);
         var userRegistered = userInterfaceService.register(users);
         if (userRegistered.equals("Email-taken")) {
+            System.out.println(userRegistered);
             return new ResponseEntity<>(new ExceptionHandling(userRegistered), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userRegistered, HttpStatus.OK);

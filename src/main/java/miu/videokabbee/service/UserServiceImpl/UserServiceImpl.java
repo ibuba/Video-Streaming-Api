@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserInterfaceService {
         this.authenticationManager = authenticationManager;
     }
     public String register(Users users) {
+        System.out.println(userRepository.existsByContact_Email(users.getContact().getEmail()));
         if(userRepository.existsByContact_Email(users.getContact().getEmail())){
            return "Email-taken";
         }else
