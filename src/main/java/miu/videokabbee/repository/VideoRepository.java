@@ -15,8 +15,7 @@ public interface VideoRepository extends MongoRepository<Video,String> {
     Optional<Video> findByTitle(String title);
     Optional<Video> findByUrl(String url);
     List<Comment> findCommentsByVideoId(String videoId);
-//    Comment saveComment(Comment comment);
-   // Video saveComment(String videoId, Comment comment);
+
 
 }
 
