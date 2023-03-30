@@ -42,6 +42,7 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 
 
 			Users aa = new Users(1L, "abi", "zaki", 45,List.of(new Role(1l,"ADMIN")),
+
 					 passwordEncoder.encode("Test@1234"), contact, address);
 
 
@@ -52,6 +53,7 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 
 
 			LocalDate localDate=LocalDate.now();
+
 
 			//Vide video = new Video("1",)
 			Video video= new Video("1","https://kabbee.com/shanga-group-video.mp4",true,

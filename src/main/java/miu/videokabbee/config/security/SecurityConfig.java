@@ -29,6 +29,7 @@ public class SecurityConfig {
 
         http
                 .csrf().disable()
+
                 .authorizeHttpRequests()
                 // .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/auth/**").permitAll()
@@ -39,6 +40,16 @@ public class SecurityConfig {
                 .permitAll()
                 //.hasRole("ADMIN")
                 // .requestMatchers("/videos/**").permitAll()//should be changed ;later
+                // .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/auth/**").permitAll()
+                //.requestMatchers("/user/**").hasRole("ADMIN")//hasAnyRole("USER","ADMIN")
+                .requestMatchers("/users/register/**")
+                .permitAll()
+                .requestMatchers("/users/{id}")
+                .permitAll()
+                //.hasRole("ADMIN")
+                // .requestMatchers("/videos/**").permitAll()//should be changed ;later
+
                 .anyRequest()
                 .authenticated()
                 .and().sessionManagement()
@@ -54,18 +65,20 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        final DaoAuthenticationProvider authenticationProvider=
+        final DaoAuthenticationProvider authenticationProvider =
                 new DaoAuthenticationProvider();
         authenticationProvider
                 .setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return  authenticationProvider;
+        return authenticationProvider;
     }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
 
     }
+
     @Bean
     public AuthenticationManager
     authenticationManager(AuthenticationConfiguration config) throws Exception {

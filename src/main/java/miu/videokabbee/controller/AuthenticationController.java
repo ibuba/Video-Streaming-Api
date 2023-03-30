@@ -28,6 +28,8 @@ public class AuthenticationController {
     // Generating Tokens for a user to login
     public ResponseEntity<?> authenticateToken(@RequestBody @Validated LogInRequest request) {
 
+        System.out.println(request);
+
         if(userDetailCustom.getLoginAttempt() ==5){
           return  userDetailCustom.checkAttemptAndLock();
         }
