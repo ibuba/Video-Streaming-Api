@@ -1,4 +1,3 @@
-
 package miu.videokabbee.service.videoservice;
 
 import miu.videokabbee.domain.Comment;
@@ -25,5 +24,8 @@ public interface VideoService {
 
     // dfferent way to add coment
     void addCommentToVideo(Long userId, String videoId, String text);
+    
+    List<Video> searchVideos(String word);
 
 }
+

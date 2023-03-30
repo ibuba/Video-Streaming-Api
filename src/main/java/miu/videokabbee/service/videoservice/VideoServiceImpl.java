@@ -1,4 +1,3 @@
-
 package miu.videokabbee.service.videoservice;
 import miu.videokabbee.domain.Comment;
 import miu.videokabbee.domain.Users;
@@ -88,5 +87,11 @@ public class VideoServiceImpl implements VideoService {
         video.addComment(comment);
         videoRepository.save(video);
     }
+    
+     public List<Video> searchVideos(String word) {
+        return   videoRepository.findByTitleContainingOrGenreContainingOrPopularityContaining(word,word,word)
+                .orElse(null);
+    }
 
 }
+

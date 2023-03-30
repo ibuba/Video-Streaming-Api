@@ -1,4 +1,3 @@
-
 package miu.videokabbee.domain;
 
 import lombok.AllArgsConstructor;
@@ -29,7 +28,9 @@ public class Video {
     private int viewCount;
     private int likeCount;
     private List<Comment> comments;
-
+    private String genre;
+    private String description;
+    private String popularity;
 
 
 
@@ -67,3 +68,4 @@ public class Video {
     }
 
 }
+
