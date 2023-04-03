@@ -3,12 +3,16 @@ package miu.videokabbee.service.emailSender;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import miu.videokabbee.domain.PolicyUpdateNotification;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.Properties;
 
 @Service
 public class EmailService {
+
 
     private final String senderEmail = "ibesto682@gmail.com";
     private final String senderPassword ="ebopwcrleyjciska";
@@ -39,4 +43,6 @@ public class EmailService {
 
         Transport.send(message);
     }
+
+
 }
