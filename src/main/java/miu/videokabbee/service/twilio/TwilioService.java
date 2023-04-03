@@ -2,8 +2,11 @@ package miu.videokabbee.service.twilio;
 
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import miu.videokabbee.domain.Users;
 import org.springframework.stereotype.Service;
 import com.twilio.Twilio;
+
+import java.util.Optional;
 
 /**
  * Helps to send OTP through SMS
@@ -29,4 +32,14 @@ public class TwilioService {
                 new PhoneNumber(fromPhoneNumber), message).create();
         System.out.println(message);
     }
+//    public void sendSmsNotification(String toPhoneNumber, String message) {
+//        System.out.println("sms-method-called");
+//        Twilio.init(accountSid, authToken);
+//        Message.creator(new PhoneNumber(toPhoneNumber),
+//                new PhoneNumber(fromPhoneNumber), message).create();
+//        System.out.println(message);
+//    }
+
+
+
 }

@@ -41,6 +41,8 @@ public class Users {
     private Contact contact;
     private Address address;
     private String Otp;
+    //option for the user regarding the policy
+    private boolean agreedToPolicy;
 
     public Users(Long id, String firstName,
                  String lastName, int age,

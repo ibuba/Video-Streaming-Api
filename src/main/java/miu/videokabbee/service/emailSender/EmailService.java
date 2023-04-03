@@ -4,10 +4,7 @@ import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import miu.videokabbee.domain.PolicyUpdateNotification;
-import miu.videokabbee.service.NotificationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +43,6 @@ public class EmailService {
 
         Transport.send(message);
     }
+
 
 }
