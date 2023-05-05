@@ -3,9 +3,6 @@ package miu.videokabbee.service.emailSender;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import miu.videokabbee.domain.PolicyUpdateNotification;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.Properties;
