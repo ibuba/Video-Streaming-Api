@@ -32,6 +32,8 @@ public class VideoKabbeeApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 
 		SpringApplication.run(VideoKabbeeApplication.class, args);
+
+
 	}
 
 	@Override

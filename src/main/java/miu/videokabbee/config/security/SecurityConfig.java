@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers("/users/{id}")
                 .permitAll()
+                .requestMatchers("/subscription/**").permitAll()
                 //.hasRole("ADMIN")
                 // .requestMatchers("/videos/**").permitAll()//should be changed ;later
 
